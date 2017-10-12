@@ -24,28 +24,40 @@ var stdin = process.openStdin();
 stdin.addListener("data", function(d) {
     
     let inString = d.toString().trim().toUpperCase();
-    if (inString === "RUN")
+    
+    switch (inString)
     {
-        if (RunContext.vm.isRunning)
-            console.log('already running');
-        else   
-            RunContext.vm.run();
-    }
-    else if (inString === "STOP")
-    {
-        RunContext.vm.stop();
-    }
-    else if (inString == "ADD")
-    {
-        RunContext.vm.consultants.push(new Models.Consultant(1000, "Janne"));
-    }
-    else if (inString == "PRINT")
-    {
-        RunContext.vm.printStats();
-    } else if (inString == "EXIT") {
-        process.exit(1);
-    } else {
-        console.log('What?');
+        case "RUN": {
+            if (RunContext.vm.isRunning)
+                console.log('already running');
+            else   
+                RunContext.vm.run();
+            break;
+        }
+        case "STOP": {
+            RunContext.vm.stop();
+            break;
+        }
+        case "ADD": {
+            console.log('Added resource with 1000 in hourly rate');
+            RunContext.vm.consultants.push(new Models.Consultant(1000, "Janne"));
+            break;
+        }
+        case "PRINT": {
+            RunContext.vm.printStats();
+            break;
+        }
+        case "EXIT": {
+            process.exit(1);
+            break;
+        }
+        case "HELP": {
+            console.log('Possible commands are: EXIT, PRINT, RUN, STOP and ADD');
+            break;
+        }
+        default: {
+            console.log('What?');
+        }
     }
   });
 
