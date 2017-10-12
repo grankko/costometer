@@ -1,0 +1,16 @@
+{
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Launch Program",
+                "program": "${workspaceRoot}/SartUp.ts",
+                "outFiles": [
+                    "${workspaceRoot}/out/**/*.js"
+                ],
+                "console": "externalTerminal"
+            }
+
+        ]
+    }
