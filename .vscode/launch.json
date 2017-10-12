@@ -5,7 +5,7 @@
                 "type": "node",
                 "request": "launch",
                 "name": "Launch Program",
-                "program": "${workspaceRoot}/SartUp.ts",
+                "program": "${workspaceRoot}/StartUp.ts",
                 "outFiles": [
                     "${workspaceRoot}/out/**/*.js"
                 ],
