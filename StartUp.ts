@@ -1,81 +1,22 @@
+/// <reference path="Models/Consultant.ts" />
+/// <reference path="ViewModels/CostOMeterViewModel.ts" />
+
 class StartUp {
 
-    vm: CostOMeterViewModel;
+    vm: ViewModels.CostOMeterViewModel;
 
     public main(): number {
         
         let alive:boolean = true;
 
-        this.vm = new CostOMeterViewModel(100);
-        this.vm.consultants.push(new Consultant(1000, 'Anders'));
-        this.vm.consultants.push(new Consultant(1200, 'David'));
+        this.vm = new ViewModels.CostOMeterViewModel(100);
+        this.vm.consultants.push(new Models.Consultant(1000, 'Anders'));
+        this.vm.consultants.push(new Models.Consultant(1200, 'David'));
         this.vm.run();
 
         return 0;
     }
 }
-
-class CostOMeterViewModel {
-    consultants: Consultant[] = [];
-    timePassed: number;
-    isRunning: boolean;
-    timeInterval: number;
-    timer;
-
-    constructor(timeInterval: number) {
-        this.timeInterval = timeInterval;
-        this.timePassed = 0;
-    }
-
-    public run() {
-        console.log('Starting calculator');
-        this.isRunning = true;
-
-        let startTime = new Date().getTime();
-        let prevElapsed = this.timePassed;
-        this.timer = setInterval(() => {
-            this.timePassed = new Date().getTime() - startTime + prevElapsed;
-        }, this.timeInterval);
-    }
-
-    public stop() {
-        console.log("Stopping calculator");
-        this.isRunning = false;
-        clearInterval(this.timer);
-    }
-
-    private totalHourlyCost() :number {
-        let totalCost = 0;
-        for (let cons of this.consultants) {
-            totalCost += cons.hourlyCost;
-        }
-        return totalCost;
-    }
-
-    private currentCost() :number {
-        let hours = (this.timePassed / 1000) / 3600;
-        return hours * this.totalHourlyCost();
-    }
-
-    public printStats()
-    {
-        let logLine = 'time passed: ' + (this.timePassed / 1000) + " | current cost: " + this.currentCost() + " | total hourly cost: " + this.totalHourlyCost();
-        console.log(logLine);
-    }
-    
-}
-
-class Consultant {
-
-    public name: string;
-    public hourlyCost: number;
-
-    constructor(cost: number, name: string) {
-        this.name = name;
-        this.hourlyCost = cost;
-    }
-}
-
 
 let RunContext = new StartUp();
 
@@ -96,7 +37,7 @@ stdin.addListener("data", function(d) {
     }
     else if (inString == "ADD")
     {
-        RunContext.vm.consultants.push(new Consultant(1000, "Janne"));
+        RunContext.vm.consultants.push(new Models.Consultant(1000, "Janne"));
     }
     else if (inString == "PRINT")
     {

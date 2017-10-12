@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "module": "commonjs",
         "sourceMap": true,
         "types": [
             // add node as an option
@@ -11,6 +10,7 @@
          "typeRoots": [
             // add path to @types
             "node_modules/@types"
-         ]
+         ],
+         "outFile": "./build/build.js"
     }
 }
