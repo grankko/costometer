@@ -17,6 +17,7 @@ var ViewModels;
             this.consultants = [];
             this.timeInterval = timeInterval;
             this.timePassed = 0;
+            this.debugText = "Hi from vm!";
         }
         CostOMeterViewModel.prototype.run = function () {
             var _this = this;
@@ -32,6 +33,9 @@ var ViewModels;
             console.log("Stopping calculator");
             this.isRunning = false;
             clearInterval(this.timer);
+        };
+        CostOMeterViewModel.prototype.addConsultant = function (name, cost) {
+            this.consultants.push(new Models.Consultant(cost, name));
         };
         CostOMeterViewModel.prototype.totalHourlyCost = function () {
             var totalCost = 0;
@@ -53,58 +57,8 @@ var ViewModels;
     }());
     ViewModels.CostOMeterViewModel = CostOMeterViewModel;
 })(ViewModels || (ViewModels = {}));
-/// <reference path="Models/Consultant.ts" />
-/// <reference path="ViewModels/CostOMeterViewModel.ts" />
-var StartUp = /** @class */ (function () {
-    function StartUp() {
-    }
-    StartUp.prototype.main = function () {
-        var alive = true;
-        this.vm = new ViewModels.CostOMeterViewModel(100);
-        this.vm.consultants.push(new Models.Consultant(1000, 'Anders'));
-        this.vm.consultants.push(new Models.Consultant(1200, 'David'));
-        this.vm.run();
-        return 0;
-    };
-    return StartUp;
-}());
-var RunContext = new StartUp();
-var stdin = process.openStdin();
-stdin.addListener("data", function (d) {
-    var inString = d.toString().trim().toUpperCase();
-    switch (inString) {
-        case "RUN": {
-            if (RunContext.vm.isRunning)
-                console.log('already running');
-            else
-                RunContext.vm.run();
-            break;
-        }
-        case "STOP": {
-            RunContext.vm.stop();
-            break;
-        }
-        case "ADD": {
-            console.log('Added resource with 1000 in hourly rate');
-            RunContext.vm.consultants.push(new Models.Consultant(1000, "Janne"));
-            break;
-        }
-        case "PRINT": {
-            RunContext.vm.printStats();
-            break;
-        }
-        case "EXIT": {
-            process.exit(1);
-            break;
-        }
-        case "HELP": {
-            console.log('Possible commands are: EXIT, PRINT, RUN, STOP and ADD');
-            break;
-        }
-        default: {
-            console.log('What?');
-        }
-    }
-});
-RunContext.main();
-//# sourceMappingURL=build.js.map
+///<reference path="Models/Consultant.ts" />
+///<reference path="ViewModels/CostOMeterViewModel.ts" />
+console.log('Hi there');
+var vm = new ViewModels.CostOMeterViewModel(100);
+//# sourceMappingURL=app.js.map

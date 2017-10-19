@@ -5,11 +5,14 @@ namespace ViewModels {
         timePassed: number;
         isRunning: boolean;
         timeInterval: number;
+        debugText: string;
         timer;
 
         constructor(timeInterval: number) {
             this.timeInterval = timeInterval;
             this.timePassed = 0;
+
+            this.debugText = "Hi from vm!";
         }
 
         public run() {
@@ -27,6 +30,10 @@ namespace ViewModels {
             console.log("Stopping calculator");
             this.isRunning = false;
             clearInterval(this.timer);
+        }
+
+        public addConsultant(name :string, cost :number) {
+            this.consultants.push(new Models.Consultant(cost, name));
         }
 
         private totalHourlyCost() :number {
