@@ -27,6 +27,8 @@ var ViewModels;
             var prevElapsed = this.timePassed;
             this.timer = setInterval(function () {
                 _this.timePassed = new Date().getTime() - startTime + prevElapsed;
+                _this.totalCost = _this.calculateCurrentCost();
+                _this.updated();
             }, this.timeInterval);
         };
         CostOMeterViewModel.prototype.stop = function () {
@@ -37,20 +39,21 @@ var ViewModels;
         CostOMeterViewModel.prototype.addConsultant = function (name, cost) {
             this.consultants.push(new Models.Consultant(cost, name));
         };
-        CostOMeterViewModel.prototype.totalHourlyCost = function () {
-            var totalCost = 0;
+        CostOMeterViewModel.prototype.calculateTotalHourlyCost = function () {
+            var totalHourlyCostNow = 0;
             for (var _i = 0, _a = this.consultants; _i < _a.length; _i++) {
                 var cons = _a[_i];
-                totalCost += cons.hourlyCost;
+                totalHourlyCostNow = totalHourlyCostNow + cons.hourlyCost;
             }
-            return totalCost;
+            this.totalHourlyCost = totalHourlyCostNow;
+            return totalHourlyCostNow;
         };
-        CostOMeterViewModel.prototype.currentCost = function () {
+        CostOMeterViewModel.prototype.calculateCurrentCost = function () {
             var hours = (this.timePassed / 1000) / 3600;
-            return hours * this.totalHourlyCost();
+            return hours * this.calculateTotalHourlyCost();
         };
         CostOMeterViewModel.prototype.printStats = function () {
-            var logLine = 'time passed: ' + (this.timePassed / 1000) + " | current cost: " + this.currentCost() + " | total hourly cost: " + this.totalHourlyCost();
+            var logLine = 'time passed: ' + (this.timePassed / 1000) + " | current cost: " + this.totalCost + " | total hourly cost: " + this.totalHourlyCost;
             console.log(logLine);
         };
         return CostOMeterViewModel;

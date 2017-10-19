@@ -6,7 +6,10 @@ namespace ViewModels {
         isRunning: boolean;
         timeInterval: number;
         debugText: string;
-        timer;
+        totalCost: number;
+        totalHourlyCost: number;
+        timer;        
+        updated;
 
         constructor(timeInterval: number) {
             this.timeInterval = timeInterval;
@@ -22,7 +25,9 @@ namespace ViewModels {
             let startTime = new Date().getTime();
             let prevElapsed = this.timePassed;
             this.timer = setInterval(() => {
-                this.timePassed = new Date().getTime() - startTime + prevElapsed;
+                this.timePassed = new Date().getTime() - startTime + prevElapsed;                
+                this.totalCost = this.calculateCurrentCost();
+                this.updated();
             }, this.timeInterval);
         }
 
@@ -36,22 +41,23 @@ namespace ViewModels {
             this.consultants.push(new Models.Consultant(cost, name));
         }
 
-        private totalHourlyCost() :number {
-            let totalCost = 0;
+        private calculateTotalHourlyCost() :number {
+            let totalHourlyCostNow = 0;
             for (let cons of this.consultants) {
-                totalCost += cons.hourlyCost;
+                totalHourlyCostNow = totalHourlyCostNow + cons.hourlyCost;
             }
-            return totalCost;
+            this.totalHourlyCost = totalHourlyCostNow;
+            return totalHourlyCostNow;
         }
 
-        private currentCost() :number {
+        private calculateCurrentCost() :number {
             let hours = (this.timePassed / 1000) / 3600;
-            return hours * this.totalHourlyCost();
+            return hours * this.calculateTotalHourlyCost();
         }
 
         public printStats()
         {
-            let logLine = 'time passed: ' + (this.timePassed / 1000) + " | current cost: " + this.currentCost() + " | total hourly cost: " + this.totalHourlyCost();
+            let logLine = 'time passed: ' + (this.timePassed / 1000) + " | current cost: " + this.totalCost + " | total hourly cost: " + this.totalHourlyCost;
             console.log(logLine);
         }
         
