@@ -55,8 +55,7 @@ var ViewModels;
             var totalHourlySummed = 0;
             for (var _i = 0, _a = this.consultants; _i < _a.length; _i++) {
                 var cons = _a[_i];
-                if (typeof (cons.hourlyCost) === 'number')
-                    totalHourlySummed = totalHourlySummed + cons.hourlyCost;
+                totalHourlySummed = Number(totalHourlySummed) + Number(cons.hourlyCost);
             }
             return totalHourlySummed.toFixed(2);
         };
@@ -64,8 +63,7 @@ var ViewModels;
             var totalCostSummed = 0;
             for (var _i = 0, _a = this.consultants; _i < _a.length; _i++) {
                 var cons = _a[_i];
-                if (typeof (cons.getTotalCost()) === 'number')
-                    totalCostSummed = totalCostSummed + cons.getTotalCost();
+                totalCostSummed = Number(totalCostSummed) + Number(cons.getTotalCost());
             }
             return totalCostSummed.toFixed(2);
         };
@@ -103,5 +101,5 @@ var ViewModels;
 ///<reference path="Models/Consultant.ts" />
 ///<reference path="ViewModels/CostOMeterViewModel.ts" />
 console.log('Hi there');
-var vm = new ViewModels.CostOMeterViewModel(100);
+var vm = new ViewModels.CostOMeterViewModel(1000);
 //# sourceMappingURL=app.js.map

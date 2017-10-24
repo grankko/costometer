@@ -16,8 +16,7 @@ namespace ViewModels {
         public getTotalHourlyCost(): string {            
             let totalHourlySummed: number = 0;
             for (let cons of this.consultants) {
-                if (typeof(cons.hourlyCost) === 'number')
-                    totalHourlySummed = totalHourlySummed + cons.hourlyCost;
+                totalHourlySummed = Number(totalHourlySummed) + Number(cons.hourlyCost);
             }
 
             return totalHourlySummed.toFixed(2);
@@ -26,8 +25,7 @@ namespace ViewModels {
         public getTotalCost(): string {
             let totalCostSummed: number = 0;
             for (let cons of this.consultants) {
-                if (typeof(cons.getTotalCost()) === 'number')
-                    totalCostSummed = totalCostSummed + cons.getTotalCost();
+                totalCostSummed = Number(totalCostSummed) + Number(cons.getTotalCost());
             }
 
             return totalCostSummed.toFixed(2);

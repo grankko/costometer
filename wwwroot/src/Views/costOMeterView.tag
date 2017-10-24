@@ -52,7 +52,8 @@
     this.on('mount', function () {
         console.log('Tag mounted');
         opts.viewModel.onTick = () => {
-            this.update();
+            riot.update();
+            console.log(this);
         }
     })
   </script>
