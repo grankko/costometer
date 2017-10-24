@@ -91,7 +91,6 @@ var ViewModels;
         };
         CostOMeterViewModel.prototype.removeConsultant = function (item) {
             console.log('Removing consultant with id ' + item.id);
-            console.log(item);
             var index = this.consultants.indexOf(item);
             console.log('Index of this one is: ' + index);
             this.consultants.splice(index, 1);
