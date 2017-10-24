@@ -23,7 +23,7 @@
   <script>
 
     remove(e) {
-        opts.viewModel.removeConsultant(e);
+        opts.viewModel.removeConsultant(e.item);
         this.update();
     }
 
@@ -53,7 +53,6 @@
         console.log('Tag mounted');
         opts.viewModel.onTick = () => {
             riot.update();
-            console.log(this);
         }
     })
   </script>

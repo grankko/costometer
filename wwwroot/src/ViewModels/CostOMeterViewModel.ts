@@ -61,9 +61,11 @@ namespace ViewModels {
         }
 
         public removeConsultant(item :Models.Consultant) {
-            console.log('Removing consultant.');
+            console.log('Removing consultant with id ' + item.id);
 
             let index = this.consultants.indexOf(item);
+            console.log('Index of this one is: ' + index);
+
             this.consultants.splice(index, 1);
         }        
     }
