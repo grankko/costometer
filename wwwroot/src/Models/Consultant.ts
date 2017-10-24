@@ -1,12 +1,68 @@
 namespace Models {
     export class Consultant {
         
-            public name: string;
-            public hourlyCost: number;
+        public name: string;            
+        public id: number;
+        public hourlyCost: number;
+
+        public onTick;
         
-            constructor(cost: number, name: string) {
-                this.name = name;
-                this.hourlyCost = cost;
+        private lastStarted: number;
+        private previousTimespanCosts: number;
+        private currentTimespanCost: number;
+        private timerInterval: number;
+
+        private timer;
+
+        
+        constructor(cost: number, name: string, id: number, timerInterval: number) {
+            this.name = name;
+            this.hourlyCost = cost;
+            this.id = id;
+            this.timerInterval = timerInterval;
+
+            this.previousTimespanCosts = 0;
+            this.currentTimespanCost = 0;
         }
+
+        public getTotalCostFormatted() :string {
+            return (this.previousTimespanCosts + this.currentTimespanCost).toFixed(2);
+        }
+
+        public getTotalCost() :number {
+            return (this.previousTimespanCosts + this.currentTimespanCost);
+        }
+
+        public ticking() {
+
+            let elapsed = (new Date().getTime() - this.lastStarted);
+            let elapsedHours = (elapsed / 1000) / 3600;
+            this.currentTimespanCost = elapsedHours * this.hourlyCost;
+
+            this.onTick();
+        }
+
+        public start() {
+            console.log('Starting calculator for ' + this.id);
+
+            this.currentTimespanCost = 0;
+            this.lastStarted = new Date().getTime();
+
+            this.timer = setInterval(() => {
+                this.ticking();
+             }, this.timerInterval);
+        }
+
+        public pause() {
+            console.log('Pausing calculator for ' + this.id);
+            console.log('Previous cost is for ' + this.id +' is: ' + this.previousTimespanCosts.toFixed(2));
+            clearInterval(this.timer);
+          
+            let currentTotalCost = (this.previousTimespanCosts + this.currentTimespanCost)
+            this.previousTimespanCosts = currentTotalCost;
+
+            this.onTick();
+        }
+
     }
 }

@@ -1,10 +1,14 @@
 
 <costOMeterView>
-    <h3>Consultants!</h3>
+    <h3>Resources</h3>
       <ul>
         <li each={ opts.viewModel.consultants }>
             <label> Name: { name } </label>
             <label> Price: { hourlyCost } </label>
+            <label> Cost: { getTotalCostFormatted() } </label>
+            <a onclick="{start}">start</a>
+            <a onclick="{pause}">pause</a>
+            <a onclick="{parent.remove}">remove</a>
         </li>
   </ul>
     <form onsubmit={ add }>
@@ -14,16 +18,21 @@
     </form>
     <button onclick={ runCalc }>Run</button>
     <button onclick={ stopCalc }>Pause</button>
-    <label>Cost: { opts.viewModel.totalCost }</label>
-    <label>Total hourly: { opts.viewModel.totalHourlyCost }</label>
+    <label>Cost: { opts.viewModel.getTotalCost() }</label>
+    <label>Total hourly: { opts.viewModel.getTotalHourlyCost() }</label>
   <script>
 
+    remove(e) {
+        opts.viewModel.removeConsultant(e);
+        this.update();
+    }
+
     runCalc(e) {
-        opts.viewModel.run();
+        opts.viewModel.startCalculator();
     }
 
     stopCalc(e) {
-        opts.viewModel.stop();
+        opts.viewModel.stopCalculator();
     }
 
     editName(e) {
@@ -42,7 +51,7 @@
 
     this.on('mount', function () {
         console.log('Tag mounted');
-        opts.viewModel.updated = () => {
+        opts.viewModel.onTick = () => {
             this.update();
         }
     })

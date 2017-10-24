@@ -1,65 +1,72 @@
 ///<reference path="../Models/Consultant.ts" />
 namespace ViewModels {
     export class CostOMeterViewModel {
-        consultants: Models.Consultant[] = [];
-        timePassed: number;
-        isRunning: boolean;
-        timeInterval: number;
-        debugText: string;
-        totalCost: number;
-        totalHourlyCost: number;
-        timer;        
-        updated;
 
-        constructor(timeInterval: number) {
-            this.timeInterval = timeInterval;
-            this.timePassed = 0;
+        public consultants: Models.Consultant[] = [];
+        public onTick;
 
-            this.debugText = "Hi from vm!";
+        private timerInterval: number;
+        private lastId: number;
+        
+        constructor(newTimerInterval: number) {
+            this.timerInterval = newTimerInterval;
+            this.lastId = 0;
         }
 
-        public run() {
-            console.log('Starting calculator');
-            this.isRunning = true;
+        public getTotalHourlyCost(): string {            
+            let totalHourlySummed: number = 0;
+            for (let cons of this.consultants) {
+                if (typeof(cons.hourlyCost) === 'number')
+                    totalHourlySummed = totalHourlySummed + cons.hourlyCost;
+            }
 
-            let startTime = new Date().getTime();
-            let prevElapsed = this.timePassed;
-            this.timer = setInterval(() => {
-                this.timePassed = new Date().getTime() - startTime + prevElapsed;                
-                this.totalCost = this.calculateCurrentCost();
-                this.updated();
-            }, this.timeInterval);
+            return totalHourlySummed.toFixed(2);
         }
 
-        public stop() {
-            console.log("Stopping calculator");
-            this.isRunning = false;
-            clearInterval(this.timer);
+        public getTotalCost(): string {
+            let totalCostSummed: number = 0;
+            for (let cons of this.consultants) {
+                if (typeof(cons.getTotalCost()) === 'number')
+                    totalCostSummed = totalCostSummed + cons.getTotalCost();
+            }
+
+            return totalCostSummed.toFixed(2);
+        }
+
+        public startCalculator() {
+            console.log('Starting calculator.');
+
+            for (let cons of this.consultants) {
+                cons.start();
+            }
+        }
+
+        public stopCalculator() {
+            console.log('Stopping calculator.');
+
+            for (let cons of this.consultants) {
+                cons.pause();
+            }
         }
 
         public addConsultant(name :string, cost :number) {
-            this.consultants.push(new Models.Consultant(cost, name));
+           
+            console.log('Adding consultant.');
+
+            this.lastId = this.lastId + 1;
+            let newConsultant = new Models.Consultant(cost, name, this.lastId, this.timerInterval);
+            newConsultant.onTick = this.onTick;
+
+            let lastConsultantIndex = this.consultants.push(newConsultant);
+
+            console.log('Last consultant index is: ' + lastConsultantIndex);
         }
 
-        private calculateTotalHourlyCost() :number {
-            let totalHourlyCostNow = 0;
-            for (let cons of this.consultants) {
-                totalHourlyCostNow = totalHourlyCostNow + cons.hourlyCost;
-            }
-            this.totalHourlyCost = totalHourlyCostNow;
-            return totalHourlyCostNow;
-        }
+        public removeConsultant(item :Models.Consultant) {
+            console.log('Removing consultant.');
 
-        private calculateCurrentCost() :number {
-            let hours = (this.timePassed / 1000) / 3600;
-            return hours * this.calculateTotalHourlyCost();
-        }
-
-        public printStats()
-        {
-            let logLine = 'time passed: ' + (this.timePassed / 1000) + " | current cost: " + this.totalCost + " | total hourly cost: " + this.totalHourlyCost;
-            console.log(logLine);
-        }
-        
+            let index = this.consultants.indexOf(item);
+            this.consultants.splice(index, 1);
+        }        
     }
 }

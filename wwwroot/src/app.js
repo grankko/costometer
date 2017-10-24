@@ -1,10 +1,43 @@
 var Models;
 (function (Models) {
     var Consultant = /** @class */ (function () {
-        function Consultant(cost, name) {
+        function Consultant(cost, name, id, timerInterval) {
             this.name = name;
             this.hourlyCost = cost;
+            this.id = id;
+            this.timerInterval = timerInterval;
+            this.previousTimespanCosts = 0;
+            this.currentTimespanCost = 0;
         }
+        Consultant.prototype.getTotalCostFormatted = function () {
+            return (this.previousTimespanCosts + this.currentTimespanCost).toFixed(2);
+        };
+        Consultant.prototype.getTotalCost = function () {
+            return (this.previousTimespanCosts + this.currentTimespanCost);
+        };
+        Consultant.prototype.ticking = function () {
+            var elapsed = (new Date().getTime() - this.lastStarted);
+            var elapsedHours = (elapsed / 1000) / 3600;
+            this.currentTimespanCost = elapsedHours * this.hourlyCost;
+            this.onTick();
+        };
+        Consultant.prototype.start = function () {
+            var _this = this;
+            console.log('Starting calculator for ' + this.id);
+            this.currentTimespanCost = 0;
+            this.lastStarted = new Date().getTime();
+            this.timer = setInterval(function () {
+                _this.ticking();
+            }, this.timerInterval);
+        };
+        Consultant.prototype.pause = function () {
+            console.log('Pausing calculator for ' + this.id);
+            console.log('Previous cost is for ' + this.id + ' is: ' + this.previousTimespanCosts.toFixed(2));
+            clearInterval(this.timer);
+            var currentTotalCost = (this.previousTimespanCosts + this.currentTimespanCost);
+            this.previousTimespanCosts = currentTotalCost;
+            this.onTick();
+        };
         return Consultant;
     }());
     Models.Consultant = Consultant;
@@ -13,48 +46,55 @@ var Models;
 var ViewModels;
 (function (ViewModels) {
     var CostOMeterViewModel = /** @class */ (function () {
-        function CostOMeterViewModel(timeInterval) {
+        function CostOMeterViewModel(newTimerInterval) {
             this.consultants = [];
-            this.timeInterval = timeInterval;
-            this.timePassed = 0;
-            this.debugText = "Hi from vm!";
+            this.timerInterval = newTimerInterval;
+            this.lastId = 0;
         }
-        CostOMeterViewModel.prototype.run = function () {
-            var _this = this;
-            console.log('Starting calculator');
-            this.isRunning = true;
-            var startTime = new Date().getTime();
-            var prevElapsed = this.timePassed;
-            this.timer = setInterval(function () {
-                _this.timePassed = new Date().getTime() - startTime + prevElapsed;
-                _this.totalCost = _this.calculateCurrentCost();
-                _this.updated();
-            }, this.timeInterval);
-        };
-        CostOMeterViewModel.prototype.stop = function () {
-            console.log("Stopping calculator");
-            this.isRunning = false;
-            clearInterval(this.timer);
-        };
-        CostOMeterViewModel.prototype.addConsultant = function (name, cost) {
-            this.consultants.push(new Models.Consultant(cost, name));
-        };
-        CostOMeterViewModel.prototype.calculateTotalHourlyCost = function () {
-            var totalHourlyCostNow = 0;
+        CostOMeterViewModel.prototype.getTotalHourlyCost = function () {
+            var totalHourlySummed = 0;
             for (var _i = 0, _a = this.consultants; _i < _a.length; _i++) {
                 var cons = _a[_i];
-                totalHourlyCostNow = totalHourlyCostNow + cons.hourlyCost;
+                if (typeof (cons.hourlyCost) === 'number')
+                    totalHourlySummed = totalHourlySummed + cons.hourlyCost;
             }
-            this.totalHourlyCost = totalHourlyCostNow;
-            return totalHourlyCostNow;
+            return totalHourlySummed.toFixed(2);
         };
-        CostOMeterViewModel.prototype.calculateCurrentCost = function () {
-            var hours = (this.timePassed / 1000) / 3600;
-            return hours * this.calculateTotalHourlyCost();
+        CostOMeterViewModel.prototype.getTotalCost = function () {
+            var totalCostSummed = 0;
+            for (var _i = 0, _a = this.consultants; _i < _a.length; _i++) {
+                var cons = _a[_i];
+                if (typeof (cons.getTotalCost()) === 'number')
+                    totalCostSummed = totalCostSummed + cons.getTotalCost();
+            }
+            return totalCostSummed.toFixed(2);
         };
-        CostOMeterViewModel.prototype.printStats = function () {
-            var logLine = 'time passed: ' + (this.timePassed / 1000) + " | current cost: " + this.totalCost + " | total hourly cost: " + this.totalHourlyCost;
-            console.log(logLine);
+        CostOMeterViewModel.prototype.startCalculator = function () {
+            console.log('Starting calculator.');
+            for (var _i = 0, _a = this.consultants; _i < _a.length; _i++) {
+                var cons = _a[_i];
+                cons.start();
+            }
+        };
+        CostOMeterViewModel.prototype.stopCalculator = function () {
+            console.log('Stopping calculator.');
+            for (var _i = 0, _a = this.consultants; _i < _a.length; _i++) {
+                var cons = _a[_i];
+                cons.pause();
+            }
+        };
+        CostOMeterViewModel.prototype.addConsultant = function (name, cost) {
+            console.log('Adding consultant.');
+            this.lastId = this.lastId + 1;
+            var newConsultant = new Models.Consultant(cost, name, this.lastId, this.timerInterval);
+            newConsultant.onTick = this.onTick;
+            var lastConsultantIndex = this.consultants.push(newConsultant);
+            console.log('Last consultant index is: ' + lastConsultantIndex);
+        };
+        CostOMeterViewModel.prototype.removeConsultant = function (item) {
+            console.log('Removing consultant.');
+            var index = this.consultants.indexOf(item);
+            this.consultants.splice(index, 1);
         };
         return CostOMeterViewModel;
     }());
