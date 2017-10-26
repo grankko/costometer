@@ -1,0 +1,15 @@
+html,
+body {
+    height: 100%;
+}
+
+.container-center {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-space {
+    margin-right: 5px;
+}

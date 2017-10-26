@@ -1,25 +1,29 @@
 
 <costOMeterView>
     <h3>Resources</h3>
-      <ul>
-        <li each={ opts.viewModel.consultants }>
-            <label> Name: { name } </label>
-            <label> Price: { hourlyCost } </label>
-            <label> Cost: { getTotalCostFormatted() } </label>
-            <a onclick="{start}">start</a>
-            <a onclick="{pause}">pause</a>
-            <a onclick="{parent.remove}">remove</a>
+      <ul class="list-group">
+        <li class="list-group-item justify-content-between" each={ opts.viewModel.consultants }>
+            { name }
+            <span class="badge badge-default badge-pill">{ hourlyCost } kr / h</span>
+            <span class="badge badge-default badge-pill">{ getTotalCostFormatted() } kr</span>
+            <button type="button" class="btn btn-outline-primary" onclick={start}>start</button>
+            <button type="button" class="btn btn-outline-secondary" onclick={pause}>pause</button>
+            <button type="button" class="btn btn-outline-danger" onclick={parent.remove}>remove</button>
         </li>
   </ul>
+    <div class="d-flex p-2">    
     <form onsubmit={ add }>
-        <input ref="inputName" onkeyup={ editName }>
-        <input ref="inputCost" onkeyup={ editCost }>
+        <input id="inputName" placeholder="Name" />
+        <input id="inputCost" placeholder="Cost per hour" type="number" />
         <button>Add</button>
     </form>
-    <button onclick={ runCalc }>Run</button>
-    <button onclick={ stopCalc }>Pause</button>
-    <label>Cost: { opts.viewModel.getTotalCost() }</label>
-    <label>Total hourly: { opts.viewModel.getTotalHourlyCost() }</label>
+    </div>
+    <div class="d-flex p-2">
+        <button type="button" class="btn btn-outline-primary btn-space" onclick={ runCalc }>Run</button>
+        <button type="button" class="btn btn-outline-secondary btn-space" onclick={ stopCalc }>Pause</button>
+        <label>Cost: { opts.viewModel.getTotalCost() }</label>
+        <label>Total hourly: { opts.viewModel.getTotalHourlyCost() }</label>
+    </div>
   <script>
 
     remove(e) {
@@ -35,17 +39,17 @@
         opts.viewModel.stopCalculator();
     }
 
-    editName(e) {
-        this.newName = e.target.value
-    }
-
-    editCost(e) {
-        this.newCost = e.target.value
-    }
-
     add(e) {
       e.preventDefault()
-      opts.viewModel.addConsultant(this.newName, this.newCost)
+      
+      let name = $('#inputName').val();
+      let cost = $('#inputCost').val();
+
+      opts.viewModel.addConsultant(name, cost)
+
+      $('#inputName').val('');
+      $('#inputCost').val('');
+
       this.update();
     }
 
@@ -55,6 +59,11 @@
             riot.update();
         }
     })
+
+  this.on('update', function() {
+    //console.log('Tag updating');
+  })
+
   </script>
 
 
