@@ -4,7 +4,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Hello, world!</title>
+    <title>cost-o-meter 2.0</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,21 +14,28 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-      <div class="container container-center">
-        <costOMeterView></costOMeterView>
-      </div>
-    
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <header>
+    <div>
+      <img src="img/logo-glow.png" alt="logo" style="float: left; height: 100px;" />
+    </div>
+  </header>
+  <div class="container-fluid body-content">
+    <costOMeterView></costOMeterView>    
+  </div>
+  <footer>
+    <costOMeterFooter></costOMeterFooter>
+  </footer>
     <script src="src/Views/costOMeterView.tag" type="riot/tag"></script>
+    <script src="src/Views/costOMeterFooter.tag" type="riot/tag"></script>
     <script src="https://rawgit.com/riot/riot/master/riot%2Bcompiler.min.js"></script>
     <script src="src/app.js"></script>
     <script>
         riot.mount('costOMeterView', {viewModel: vm})
+        riot.mount('costOMeterFooter', {viewModel: vm})
     </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  </body>
+</body>
 </html>

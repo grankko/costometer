@@ -1,42 +1,30 @@
 
 <costOMeterView>
-    <h3>Resources</h3>
-      <ul class="list-group">
-        <li class="list-group-item justify-content-between" each={ opts.viewModel.consultants }>
-            { name }
-            <span class="badge badge-default badge-pill">{ hourlyCost } kr / h</span>
-            <span class="badge badge-default badge-pill">{ getTotalCostFormatted() } kr</span>
-            <button type="button" class="btn btn-outline-primary" onclick={start}>start</button>
-            <button type="button" class="btn btn-outline-secondary" onclick={pause}>pause</button>
-            <button type="button" class="btn btn-outline-danger" onclick={parent.remove}>remove</button>
+<div class="center-content">
+      <ul class="list-group bg-black">
+        <li class="list-group-item justify-content-between bg-black" each={ opts.viewModel.consultants }>
+            <span>{ name }</span>
+            <span style="float: right; margin: 10px;">{ hourlyCost } kr / h</span>
+            <span style="float: right; margin: 10px;">{ getTotalCostFormatted() } kr</span>
+            <!--  <button type="button" class="btn btn-outline-primary" onclick={start}>start</button>
+            <button type="button" class="btn btn-outline-secondary" onclick={pause}>pause</button>  -->
+            <button type="button" class="btn btn-outline-danger clickable" onclick={parent.remove}>remove</button>
         </li>
   </ul>
     <div class="d-flex p-2">    
     <form onsubmit={ add }>
-        <input id="inputName" placeholder="Name" />
-        <input id="inputCost" placeholder="Cost per hour" type="number" />
-        <button>Add</button>
+        <input id="inputName" placeholder="Name" required />
+        <input id="inputCost" placeholder="Cost per hour" type="number" required />
+        <button class="btn btn-default  clickable">Add</button>
     </form>
     </div>
-    <div class="d-flex p-2">
-        <button type="button" class="btn btn-outline-primary btn-space" onclick={ runCalc }>Run</button>
-        <button type="button" class="btn btn-outline-secondary btn-space" onclick={ stopCalc }>Pause</button>
-        <label>Cost: { opts.viewModel.getTotalCost() }</label>
-        <label>Total hourly: { opts.viewModel.getTotalHourlyCost() }</label>
-    </div>
+</div>
+
   <script>
 
     remove(e) {
         opts.viewModel.removeConsultant(e.item);
-        this.update();
-    }
-
-    runCalc(e) {
-        opts.viewModel.startCalculator();
-    }
-
-    stopCalc(e) {
-        opts.viewModel.stopCalculator();
+        riot.update();
     }
 
     add(e) {
@@ -50,11 +38,11 @@
       $('#inputName').val('');
       $('#inputCost').val('');
 
-      this.update();
+      riot.update();
     }
 
     this.on('mount', function () {
-        console.log('Tag mounted');
+        console.log('Body mounted');
         opts.viewModel.onTick = () => {
             riot.update();
         }

@@ -31,6 +31,31 @@ namespace ViewModels {
             return totalCostSummed.toFixed(2);
         }
 
+        public getIsRunnable(): boolean {            
+            if (this.consultants.length === 0)
+                return false;
+
+            return ! this.getIsRunning();            
+        }
+
+        public getIsPausable(): boolean {            
+            if (this.consultants.length === 0)
+                return false;
+
+            return this.getIsRunning();            
+        }
+
+        private getIsRunning(): boolean {
+            let isRunning = false;
+            for (let cons of this.consultants) {
+                if (cons.isRunning) {
+                    isRunning = true;
+                    break;
+                }
+            }
+            return isRunning;
+        }
+
         public startCalculator() {
             console.log('Starting calculator.');
 

@@ -4,7 +4,7 @@ namespace Models {
         public name: string;            
         public id: number;
         public hourlyCost: number;
-
+        public isRunning: boolean;
         public onTick;
         
         private lastStarted: number;
@@ -13,6 +13,7 @@ namespace Models {
         private timerInterval: number;
 
         private timer;
+        private isPausePending: boolean;       
 
         
         constructor(cost: number, name: string, id: number, timerInterval: number) {
@@ -20,6 +21,8 @@ namespace Models {
             this.hourlyCost = cost;
             this.id = id;
             this.timerInterval = timerInterval;
+            this.isPausePending = false;
+            this.isRunning = false;
 
             this.previousTimespanCosts = 0;
             this.currentTimespanCost = 0;
@@ -35,16 +38,25 @@ namespace Models {
 
         public ticking() {
 
-            let elapsed = (new Date().getTime() - this.lastStarted);
-            let elapsedHours = (elapsed / 1000) / 3600;
-            this.currentTimespanCost = elapsedHours * this.hourlyCost;
+            if (this.isPausePending === true) {
+                clearInterval(this.timer);                
+                let currentTotalCost = (this.previousTimespanCosts + this.currentTimespanCost)
+                this.previousTimespanCosts = currentTotalCost;
+                this.currentTimespanCost = 0;
+                this.isPausePending = false;
+                this.isRunning = false;
+            } else {
+                let elapsed = (new Date().getTime() - this.lastStarted);
+                let elapsedHours = (elapsed / 1000) / 3600;
+                this.currentTimespanCost = elapsedHours * this.hourlyCost;                
+            }
 
             this.onTick();
         }
 
         public start() {
             console.log('Starting calculator for ' + this.id);
-
+            this.isRunning = true;
             this.currentTimespanCost = 0;
             this.lastStarted = new Date().getTime();
 
@@ -56,13 +68,9 @@ namespace Models {
         public pause() {
             console.log('Pausing calculator for ' + this.id);
             console.log('Previous cost is for ' + this.id +' is: ' + this.previousTimespanCosts.toFixed(2));
-            clearInterval(this.timer);
-          
-            let currentTotalCost = (this.previousTimespanCosts + this.currentTimespanCost)
-            this.previousTimespanCosts = currentTotalCost;
 
-            this.onTick();
+            this.isPausePending = true;
         }
-
+        
     }
 }

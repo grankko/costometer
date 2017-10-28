@@ -1,15 +1,48 @@
-html,
-body {
+html {
     height: 100%;
-}
-
-.container-center {
+  }
+  html body {
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    overflow: hidden;
+    background-color: #000000;
+    color: #ffffff;
+  }
+  html body .container-fluid.body-content {
+    position: absolute;
+    top: 120px;
+    bottom: 100px;
+    right: 0;
+    left: 0;
+    overflow-y: auto;
+  }
+  header {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      background-color: #000;
+      height: 120px;
+      overflow: hidden;
+  }
+  footer {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #000;
+      height: 100px;
+  }
 
-.btn-space {
-    margin-right: 5px;
-}
+  .center-content {
+    margin: auto;
+    width: 50%;
+    height: 120px;
+  }
+  
+  .bg-black {
+    background-color: #000;
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
