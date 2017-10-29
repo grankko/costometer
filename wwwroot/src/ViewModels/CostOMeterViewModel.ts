@@ -1,8 +1,8 @@
-///<reference path="../Models/Consultant.ts" />
+///<reference path="../ViewModels/Consultant.ts" />
 namespace ViewModels {
     export class CostOMeterViewModel {
 
-        public consultants: Models.Consultant[] = [];
+        public consultants: ViewModels.Consultant[] = [];
         public onTick;
 
         private timerInterval: number;
@@ -72,12 +72,12 @@ namespace ViewModels {
             }
         }
 
-        public addConsultant(name :string, cost :number) :Models.Consultant {
+        public addConsultant(name :string, cost :number) :ViewModels.Consultant {
            
             console.log('Adding consultant.');
 
             this.lastId = this.lastId + 1;
-            let newConsultant = new Models.Consultant(cost, name, this.lastId, this.timerInterval);
+            let newConsultant = new ViewModels.Consultant(cost, name, this.lastId, this.timerInterval);
             newConsultant.onTick = this.onTick;
 
             let lastConsultantIndex = this.consultants.push(newConsultant);
@@ -85,7 +85,7 @@ namespace ViewModels {
             return newConsultant;
         }
 
-        public removeConsultant(item :Models.Consultant) {
+        public removeConsultant(item :ViewModels.Consultant) {
             console.log('Removing consultant with id ' + item.id);
 
             let index = this.consultants.indexOf(item);

@@ -1,4 +1,4 @@
-namespace Models {
+namespace ViewModels {
     export class Consultant {
         
         public name: string;            

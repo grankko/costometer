@@ -1,5 +1,5 @@
-var Models;
-(function (Models) {
+var ViewModels;
+(function (ViewModels) {
     var Consultant = /** @class */ (function () {
         function Consultant(cost, name, id, timerInterval) {
             this.name = name;
@@ -50,9 +50,9 @@ var Models;
         };
         return Consultant;
     }());
-    Models.Consultant = Consultant;
-})(Models || (Models = {}));
-///<reference path="../Models/Consultant.ts" />
+    ViewModels.Consultant = Consultant;
+})(ViewModels || (ViewModels = {}));
+///<reference path="../ViewModels/Consultant.ts" />
 var ViewModels;
 (function (ViewModels) {
     var CostOMeterViewModel = /** @class */ (function () {
@@ -115,7 +115,7 @@ var ViewModels;
         CostOMeterViewModel.prototype.addConsultant = function (name, cost) {
             console.log('Adding consultant.');
             this.lastId = this.lastId + 1;
-            var newConsultant = new Models.Consultant(cost, name, this.lastId, this.timerInterval);
+            var newConsultant = new ViewModels.Consultant(cost, name, this.lastId, this.timerInterval);
             newConsultant.onTick = this.onTick;
             var lastConsultantIndex = this.consultants.push(newConsultant);
             return newConsultant;
@@ -130,7 +130,7 @@ var ViewModels;
     }());
     ViewModels.CostOMeterViewModel = CostOMeterViewModel;
 })(ViewModels || (ViewModels = {}));
-///<reference path="Models/Consultant.ts" />
+///<reference path="ViewModels/Consultant.ts" />
 ///<reference path="ViewModels/CostOMeterViewModel.ts" />
 console.log('Hi there');
 var vm = new ViewModels.CostOMeterViewModel(100);
