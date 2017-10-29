@@ -1,5 +1,5 @@
 # cost-o-meter
-Calculates and displayes costs in real time for resources with hourly rates. Built this just to explore the tech.
+Calculates and displays costs in real time for resources with hourly rates. Built this just to explore the tech.
 
 Live at: https://granaker.se/costometer
 
