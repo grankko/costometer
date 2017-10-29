@@ -45,7 +45,7 @@ namespace ViewModels {
             return this.getIsRunning();            
         }
 
-        private getIsRunning(): boolean {
+        public getIsRunning(): boolean {
             let isRunning = false;
             for (let cons of this.consultants) {
                 if (cons.isRunning) {
@@ -72,7 +72,7 @@ namespace ViewModels {
             }
         }
 
-        public addConsultant(name :string, cost :number) {
+        public addConsultant(name :string, cost :number) :Models.Consultant {
            
             console.log('Adding consultant.');
 
@@ -82,7 +82,7 @@ namespace ViewModels {
 
             let lastConsultantIndex = this.consultants.push(newConsultant);
 
-            console.log('Last consultant index is: ' + lastConsultantIndex);
+            return newConsultant;
         }
 
         public removeConsultant(item :Models.Consultant) {

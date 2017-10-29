@@ -118,7 +118,7 @@ var ViewModels;
             var newConsultant = new Models.Consultant(cost, name, this.lastId, this.timerInterval);
             newConsultant.onTick = this.onTick;
             var lastConsultantIndex = this.consultants.push(newConsultant);
-            console.log('Last consultant index is: ' + lastConsultantIndex);
+            return newConsultant;
         };
         CostOMeterViewModel.prototype.removeConsultant = function (item) {
             console.log('Removing consultant with id ' + item.id);

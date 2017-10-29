@@ -1,24 +1,39 @@
 
 <costOMeterView>
-<div class="center-content">
-      <ul class="list-group bg-black">
-        <li class="list-group-item justify-content-between bg-black" each={ opts.viewModel.consultants }>
-            <span>{ name }</span>
-            <span style="float: right; margin: 10px;">{ hourlyCost } kr / h</span>
-            <span style="float: right; margin: 10px;">{ getTotalCostFormatted() } kr</span>
-            <!--  <button type="button" class="btn btn-outline-primary" onclick={start}>start</button>
-            <button type="button" class="btn btn-outline-secondary" onclick={pause}>pause</button>  -->
-            <a href="#" onclick = { parent.remove }>
-                <img src="img/del.png" alt="delete" style="height: 50px;" />
-            </a>
-        </li>
-  </ul>
-    <div>    
-        <input id="inputName" placeholder="Name" required />
-        <input id="inputCost" placeholder="Cost per hour" type="number" required />
-        <a href="#" onclick = { add }>
-            <img src="img/add.png" alt="delete" style="height: 50px;" />
-        </a>
+<div class="center-content container">
+        <div each={ opts.viewModel.consultants }>
+            <div class="row align-items-center">
+                <div class="col-10">
+                    <span class="lead">{ name }</span>
+                </div>
+                <div class="col-2">
+                    <a href="#" onclick={ remove }>
+                        <img src="img/del.png" alt="delete resource" style="height: 50px; float: right;" />
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    { hourlyCost } kr / h
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    { getTotalCostFormatted() } kr
+                </div>
+            </div>            
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-10 align-items-center">
+                <input id="inputName" placeholder="Name" style="width: 100%" />
+                <input id="inputCost" placeholder="Cost per hour" type="number" style="width: 100%" />
+            </div>
+            <div class="col-2 align-items-center">
+                <a href="#" onclick={ add }>
+                    <img src="img/add.png" alt="add resource" style="height: 50px; float: right;" />
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -30,15 +45,27 @@
     }
 
     add(e) {
+      e.preventDefault()
+      
       let name = $('#inputName').val();
       let cost = $('#inputCost').val();
 
-      opts.viewModel.addConsultant(name, cost)
+      if (!isEmptyOrSpaces(name) && !isEmptyOrSpaces(cost)) {
+        let consultant = opts.viewModel.addConsultant(name, cost)
 
-      $('#inputName').val('');
-      $('#inputCost').val('');
+        if (opts.viewModel.getIsRunning()) {
+            consultant.start();
+        }
+
+        $('#inputName').val('');
+        $('#inputCost').val('');
+      }
 
       riot.update();
+    }
+
+    function isEmptyOrSpaces(str){
+        return str === null || str.match(/^ *$/) !== null;
     }
 
     this.on('mount', function () {

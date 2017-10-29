@@ -10,7 +10,7 @@ html {
   html body .container-fluid.body-content {
     position: absolute;
     top: 120px;
-    bottom: 100px;
+    bottom: 130px;
     right: 0;
     left: 0;
     overflow-y: auto;
@@ -30,13 +30,12 @@ html {
       right: 0;
       bottom: 0;
       background-color: #000;
-      height: 100px;
+      height: 130px;
   }
 
   .center-content {
     margin: auto;
-    width: 50%;
-    height: 120px;
+    max-width: 600px;
   }
   
   .bg-black {
