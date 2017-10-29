@@ -4,23 +4,25 @@
             <span style="margin: 10px;">Cost: { opts.viewModel.getTotalCost() } kr</span>
             <span style="margin: 10px;">Total hourly: { opts.viewModel.getTotalHourlyCost() } kr / h</span>
         </div>
-        <div>        
-            <button type="button"
-                    class={opts.viewModel.getIsRunnable() ? 'btn btn-default btn-space clickable' : 'btn btn-default btn-space disabled  clickable' }
-                    onclick={runCalc}
-                     id="runButton">run</button>
-            <button type="button"
-                    class={opts.viewModel.getIsPausable() ? 'btn btn-default btn-space  clickable' : 'btn btn-default btn-space disabled  clickable' }
-                    onclick={stopCalc}
-                    id="pauseButton">pause</button>                    
+        <div>
+            <a href="#" onclick = { runCalc } style={ opts.viewModel.getIsRunnable() ? '' : 'opacity: 0.2;' }>
+                <img src="img/play.png" alt="play" style="height: 50px;" />
+            </a>
+            <a href="#" onclick = { stopCalc } style={ opts.viewModel.getIsPausable() ? '' : 'opacity: 0.2;' }>
+                <img src="img/pause.png" alt="pauseplay" style="height: 50px;" />
+            </a>
         </div>
     <script>
         runCalc(e) {
-            opts.viewModel.startCalculator();
+            if (opts.viewModel.getIsRunnable()) {
+                opts.viewModel.startCalculator();
+            }
         }
 
         stopCalc(e) {
-            opts.viewModel.stopCalculator();
+            if (opts.viewModel.getIsPausable()) {
+                opts.viewModel.stopCalculator();
+            }
         }
 
         this.on('mount', function () {

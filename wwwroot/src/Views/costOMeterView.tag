@@ -8,15 +8,17 @@
             <span style="float: right; margin: 10px;">{ getTotalCostFormatted() } kr</span>
             <!--  <button type="button" class="btn btn-outline-primary" onclick={start}>start</button>
             <button type="button" class="btn btn-outline-secondary" onclick={pause}>pause</button>  -->
-            <button type="button" class="btn btn-outline-danger clickable" onclick={parent.remove}>remove</button>
+            <a href="#" onclick = { parent.remove }>
+                <img src="img/del.png" alt="delete" style="height: 50px;" />
+            </a>
         </li>
   </ul>
-    <div class="d-flex p-2">    
-    <form onsubmit={ add }>
+    <div>    
         <input id="inputName" placeholder="Name" required />
         <input id="inputCost" placeholder="Cost per hour" type="number" required />
-        <button class="btn btn-default  clickable">Add</button>
-    </form>
+        <a href="#" onclick = { add }>
+            <img src="img/add.png" alt="delete" style="height: 50px;" />
+        </a>
     </div>
 </div>
 
@@ -28,8 +30,6 @@
     }
 
     add(e) {
-      e.preventDefault()
-      
       let name = $('#inputName').val();
       let cost = $('#inputCost').val();
 
