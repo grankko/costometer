@@ -6,7 +6,9 @@ namespace ViewModels {
         public onTick;
 
         private timerInterval: number;
+        /** Id of last Consultant generated */
         private lastId: number;
+        /** Cost of previously active and now deleted Consultants */
         private deletedConsultantCosts: number;
         
         constructor(newTimerInterval: number) {
@@ -29,7 +31,8 @@ namespace ViewModels {
             for (let cons of this.consultants) {
                 totalCostSummed = Number(totalCostSummed) + Number(cons.getTotalCost());
             }
-
+            
+            // Include costs of previously active and now deleted consultants
             totalCostSummed = totalCostSummed + this.deletedConsultantCosts;
 
             return totalCostSummed.toFixed(2);
@@ -39,14 +42,14 @@ namespace ViewModels {
             if (this.consultants.length === 0)
                 return false;
 
-            return ! this.getIsRunning();            
+            return ! this.getIsRunning();
         }
 
         public getIsPausable(): boolean {            
             if (this.consultants.length === 0)
                 return false;
 
-            return this.getIsRunning();            
+            return this.getIsRunning();
         }
 
         public getIsRunning(): boolean {
@@ -82,9 +85,9 @@ namespace ViewModels {
 
             this.lastId = this.lastId + 1;
             let newConsultant = new ViewModels.Consultant(cost, name, this.lastId, this.timerInterval);
-            newConsultant.onTick = this.onTick;
+            newConsultant.onTick = this.onTick; // wires up function for updating on Consultant timer ticks.
 
-            let lastConsultantIndex = this.consultants.push(newConsultant);
+            this.consultants.push(newConsultant);
 
             return newConsultant;
         }
@@ -98,6 +101,7 @@ namespace ViewModels {
 
             this.consultants.splice(index, 1);
 
+            // Store any costs produced by consultant so it's included even after deletion.
             this.deletedConsultantCosts = Number(this.deletedConsultantCosts) + Number(itemCost);
         }        
     }
