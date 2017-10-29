@@ -24,17 +24,17 @@
     </div>
   </header>
   <div class="container-fluid body-content">
-    <costOMeterView></costOMeterView>    
+    <costOMeterBody></costOMeterBody>    
   </div>
   <footer>
     <costOMeterFooter></costOMeterFooter>
   </footer>
-    <script src="src/Views/costOMeterView.tag" type="riot/tag"></script>
+    <script src="src/Views/costOMeterBody.tag" type="riot/tag"></script>
     <script src="src/Views/costOMeterFooter.tag" type="riot/tag"></script>
     <script src="https://rawgit.com/riot/riot/master/riot%2Bcompiler.min.js"></script>
     <script src="src/app.js"></script>
     <script>
-        riot.mount('costOMeterView', {viewModel: vm})
+        riot.mount('costOMeterBody', {viewModel: vm})
         riot.mount('costOMeterFooter', {viewModel: vm})
     </script>
 

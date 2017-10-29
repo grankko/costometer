@@ -7,10 +7,12 @@ namespace ViewModels {
 
         private timerInterval: number;
         private lastId: number;
+        private deletedConsultantCosts: number;
         
         constructor(newTimerInterval: number) {
             this.timerInterval = newTimerInterval;
             this.lastId = 0;
+            this.deletedConsultantCosts = 0;
         }
 
         public getTotalHourlyCost(): string {            
@@ -27,6 +29,8 @@ namespace ViewModels {
             for (let cons of this.consultants) {
                 totalCostSummed = Number(totalCostSummed) + Number(cons.getTotalCost());
             }
+
+            totalCostSummed = totalCostSummed + this.deletedConsultantCosts;
 
             return totalCostSummed.toFixed(2);
         }
@@ -87,11 +91,14 @@ namespace ViewModels {
 
         public removeConsultant(item :ViewModels.Consultant) {
             console.log('Removing consultant with id ' + item.id);
+            let itemCost = item.getTotalCost();
 
             let index = this.consultants.indexOf(item);
             console.log('Index of this one is: ' + index);
 
             this.consultants.splice(index, 1);
+
+            this.deletedConsultantCosts = Number(this.deletedConsultantCosts) + Number(itemCost);
         }        
     }
 }

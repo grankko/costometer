@@ -1,5 +1,5 @@
 
-<costOMeterView>
+<costOMeterBody>
 <div class="center-content container">
         <div each={ opts.viewModel.consultants }>
             <div class="row align-items-center">
@@ -80,6 +80,4 @@
   })
 
   </script>
-
-
-</costOMeterView>
+</costOMeterBody>

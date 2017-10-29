@@ -60,6 +60,7 @@ var ViewModels;
             this.consultants = [];
             this.timerInterval = newTimerInterval;
             this.lastId = 0;
+            this.deletedConsultantCosts = 0;
         }
         CostOMeterViewModel.prototype.getTotalHourlyCost = function () {
             var totalHourlySummed = 0;
@@ -75,6 +76,7 @@ var ViewModels;
                 var cons = _a[_i];
                 totalCostSummed = Number(totalCostSummed) + Number(cons.getTotalCost());
             }
+            totalCostSummed = totalCostSummed + this.deletedConsultantCosts;
             return totalCostSummed.toFixed(2);
         };
         CostOMeterViewModel.prototype.getIsRunnable = function () {
@@ -122,9 +124,11 @@ var ViewModels;
         };
         CostOMeterViewModel.prototype.removeConsultant = function (item) {
             console.log('Removing consultant with id ' + item.id);
+            var itemCost = item.getTotalCost();
             var index = this.consultants.indexOf(item);
             console.log('Index of this one is: ' + index);
             this.consultants.splice(index, 1);
+            this.deletedConsultantCosts = Number(this.deletedConsultantCosts) + Number(itemCost);
         };
         return CostOMeterViewModel;
     }());
