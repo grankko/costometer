@@ -4,6 +4,7 @@
         "out": "wwwroot/src/app.js",
         "watch": false,
         "module": "commonjs",
-        "sourceMap": true
+        "sourceMap": true,
+        "removeComments": true
     }
 }

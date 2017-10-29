@@ -1,6 +1,6 @@
 var ViewModels;
 (function (ViewModels) {
-    var Consultant = /** @class */ (function () {
+    var Consultant = (function () {
         function Consultant(cost, name, id, timerInterval) {
             this.name = name;
             this.hourlyCost = cost;
@@ -17,10 +17,8 @@ var ViewModels;
         Consultant.prototype.getTotalCost = function () {
             return (this.previousTimespanCosts + this.currentTimespanCost);
         };
-        /** Runs calculation and stores sums in state every tick of the timer */
         Consultant.prototype.ticking = function () {
             if (this.isPausePending === true) {
-                // Pause has been signaled. Set current costs to previous and reset current
                 clearInterval(this.timer);
                 var currentTotalCost = (this.previousTimespanCosts + this.currentTimespanCost);
                 this.previousTimespanCosts = currentTotalCost;
@@ -29,12 +27,10 @@ var ViewModels;
                 this.isRunning = false;
             }
             else {
-                // Normal case, calculate elapsed hours and set current cost 
                 var elapsed = (new Date().getTime() - this.lastStarted);
                 var elapsedHours = (elapsed / 1000) / 3600;
                 this.currentTimespanCost = elapsedHours * this.hourlyCost;
             }
-            // Fire hook for others to update
             this.onTick();
         };
         Consultant.prototype.start = function () {
@@ -47,7 +43,6 @@ var ViewModels;
                 _this.ticking();
             }, this.timerInterval);
         };
-        /** Will signal a pause is pending to be handled by next tick. */
         Consultant.prototype.pause = function () {
             console.log('Pausing calculator for ' + this.id);
             console.log('Previous cost is for ' + this.id + ' is: ' + this.previousTimespanCosts.toFixed(2));
@@ -57,10 +52,9 @@ var ViewModels;
     }());
     ViewModels.Consultant = Consultant;
 })(ViewModels || (ViewModels = {}));
-///<reference path="../ViewModels/Consultant.ts" />
 var ViewModels;
 (function (ViewModels) {
-    var CostOMeterViewModel = /** @class */ (function () {
+    var CostOMeterViewModel = (function () {
         function CostOMeterViewModel(newTimerInterval) {
             this.consultants = [];
             this.timerInterval = newTimerInterval;
@@ -81,7 +75,6 @@ var ViewModels;
                 var cons = _a[_i];
                 totalCostSummed = Number(totalCostSummed) + Number(cons.getTotalCost());
             }
-            // Include costs of previously active and now deleted consultants
             totalCostSummed = totalCostSummed + this.deletedConsultantCosts;
             return totalCostSummed.toFixed(2);
         };
@@ -124,7 +117,7 @@ var ViewModels;
             console.log('Adding consultant.');
             this.lastId = this.lastId + 1;
             var newConsultant = new ViewModels.Consultant(cost, name, this.lastId, this.timerInterval);
-            newConsultant.onTick = this.onTick; // wires up function for updating on Consultant timer ticks.
+            newConsultant.onTick = this.onTick;
             this.consultants.push(newConsultant);
             return newConsultant;
         };
@@ -134,16 +127,12 @@ var ViewModels;
             var index = this.consultants.indexOf(item);
             console.log('Index of this one is: ' + index);
             this.consultants.splice(index, 1);
-            // Store any costs produced by consultant so it's included even after deletion.
             this.deletedConsultantCosts = Number(this.deletedConsultantCosts) + Number(itemCost);
         };
         return CostOMeterViewModel;
     }());
     ViewModels.CostOMeterViewModel = CostOMeterViewModel;
 })(ViewModels || (ViewModels = {}));
-///<reference path="ViewModels/Consultant.ts" />
-///<reference path="ViewModels/CostOMeterViewModel.ts" />
 console.log('Hi there');
-// Initiates object to bind in view and sets timer interval to 100ms
 var vm = new ViewModels.CostOMeterViewModel(100);
 //# sourceMappingURL=app.js.map
