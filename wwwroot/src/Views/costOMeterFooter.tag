@@ -3,24 +3,24 @@
 
         <div class="row">
             <div class="col">
-                <a href="#" onclick = { runCalc } style={ opts.viewModel.getIsRunnable() ? '' : 'opacity: 0.2;' }>
-                    <img src="img/play.png" alt="play" style="height: 50px; margin-left: 15px;" />
+                <a href="#" onclick = { runCalc } class={ opts.viewModel.getIsRunnable() ? '' : 'disabled-control' }>
+                    <img src="img/play.png" alt="play" class="control-button" />
                 </a>
             </div>
             <div class="col">
-                <a href="#" onclick = { stopCalc } style={ opts.viewModel.getIsPausable() ? '' : 'opacity: 0.2;' }>
-                    <img src="img/pause.png" alt="pauseplay" style="height: 50px; margin-left: 15px;" />
+                <a href="#" onclick = { stopCalc } class={ opts.viewModel.getIsPausable() ? '' : 'disabled-control' }>
+                    <img src="img/pause.png" alt="pauseplay" class="control-button" />
                 </a>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <span class="lead" style="margin-left: 15px;">Cost: { opts.viewModel.getTotalCost() } kr</span>
+                <span class="lead m-left-15">Total cost: { opts.viewModel.getTotalCost() } kr</span>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <span class="lead"  style="margin-left: 15px;">Total hourly: { opts.viewModel.getTotalHourlyCost() } kr / h</span>
+                <span class="toned-down m-left-15">Total hourly: { opts.viewModel.getTotalHourlyCost() } kr / h</span>
             </div>
         </div>
     </div>

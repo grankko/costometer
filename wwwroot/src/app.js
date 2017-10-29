@@ -133,5 +133,5 @@ var ViewModels;
 ///<reference path="Models/Consultant.ts" />
 ///<reference path="ViewModels/CostOMeterViewModel.ts" />
 console.log('Hi there');
-var vm = new ViewModels.CostOMeterViewModel(200);
+var vm = new ViewModels.CostOMeterViewModel(100);
 //# sourceMappingURL=app.js.map

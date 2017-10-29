@@ -8,29 +8,29 @@
                 </div>
                 <div class="col-2">
                     <a href="#" onclick={ remove }>
-                        <img src="img/del.png" alt="delete resource" style="height: 50px; float: right;" />
+                        <img src="img/del.png" alt="delete resource" class="del-button" />
                     </a>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 toned-down">
                     { hourlyCost } kr / h
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 toned-down">
                     { getTotalCostFormatted() } kr
                 </div>
             </div>            
         </div>
-        <div class="row" style="margin-top: 20px;">
+        <div class="row m-top-20">
             <div class="col-10 align-items-center">
-                <input id="inputName" placeholder="Name" style="width: 100%" />
-                <input id="inputCost" placeholder="Cost per hour" type="number" style="width: 100%" />
+                <input id="inputName" placeholder="Name" class="w-full" />
+                <input id="inputCost" placeholder="Cost per hour" type="number" class="w-full" />
             </div>
             <div class="col-2 align-items-center">
                 <a href="#" onclick={ add }>
-                    <img src="img/add.png" alt="add resource" style="height: 50px; float: right;" />
+                    <img src="img/add.png" alt="add resource" class="add-button" />
                 </a>
             </div>
         </div>

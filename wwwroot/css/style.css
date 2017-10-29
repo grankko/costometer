@@ -45,3 +45,44 @@ html {
   .clickable {
     cursor: pointer;
   }
+
+  .control-button {
+    height: 50px; margin-left: 15px;
+  }
+
+  .m-left-15{
+    margin-left: 15px;
+  }
+
+  .m-top-20 {
+    margin-top: 20px;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  .disabled-control {
+    opacity: 0.2;
+  }
+
+  .del-button {
+    height: 50px;
+    float: right;
+  }
+
+  .add-button {
+    height: 50px;
+    float: right;
+  }
+
+  .toned-down {
+    color: #999;
+  }
+
+  .logo-img {
+    height: 100px;
+    margin: auto;
+    display: block;
+    padding-top: 20px;
+  }
