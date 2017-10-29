@@ -9,7 +9,7 @@ html {
   }
   html body .container-fluid.body-content {
     position: absolute;
-    top: 120px;
+    top: 150px;
     bottom: 130px;
     right: 0;
     left: 0;
@@ -21,7 +21,7 @@ html {
       right: 0;
       top: 0;
       background-color: #000;
-      height: 120px;
+      height: 150px;
       overflow: hidden;
   }
   footer {
@@ -81,7 +81,7 @@ html {
   }
 
   .logo-img {
-    height: 100px;
+    height: 150px;
     margin: auto;
     display: block;
     padding-top: 20px;
