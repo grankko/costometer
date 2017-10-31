@@ -103,6 +103,26 @@ namespace ViewModels {
 
             // Store any costs produced by consultant so it's included even after deletion.
             this.deletedConsultantCosts = Number(this.deletedConsultantCosts) + Number(itemCost);
-        }        
+        }
+
+        public loadCostConfigurationResult(data :any) {
+
+            this.resetViewModel();
+
+            // todo: parse as typed result..
+            for (let i = 0; i < data.consultants.length; i++) {
+
+                this.addConsultant(data.consultants[i].name, Number(data.consultants[i].hourlyCost));
+            }
+        }
+
+        private resetViewModel() {
+            if (this.getIsPausable()) {
+                this.stopCalculator();
+            }
+            this.consultants = [];
+            this.lastId = 0;
+            this.deletedConsultantCosts = 0;
+        }
     }
 }

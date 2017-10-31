@@ -129,6 +129,20 @@ var ViewModels;
             this.consultants.splice(index, 1);
             this.deletedConsultantCosts = Number(this.deletedConsultantCosts) + Number(itemCost);
         };
+        CostOMeterViewModel.prototype.loadCostConfigurationResult = function (data) {
+            this.resetViewModel();
+            for (var i = 0; i < data.consultants.length; i++) {
+                this.addConsultant(data.consultants[i].name, Number(data.consultants[i].hourlyCost));
+            }
+        };
+        CostOMeterViewModel.prototype.resetViewModel = function () {
+            if (this.getIsPausable()) {
+                this.stopCalculator();
+            }
+            this.consultants = [];
+            this.lastId = 0;
+            this.deletedConsultantCosts = 0;
+        };
         return CostOMeterViewModel;
     }());
     ViewModels.CostOMeterViewModel = CostOMeterViewModel;

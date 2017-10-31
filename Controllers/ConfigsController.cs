@@ -18,6 +18,12 @@ namespace Web.Costometer.Controllers
             return BuildTestSet();
         }
 
+        [HttpGet("{id}")]
+        public CostConfiguration GetById(long id)
+        {
+            return BuildTestSet().First(cc => cc.Id == id);
+        }
+
         private List<CostConfiguration> BuildTestSet() {
                         var configs = new List<CostConfiguration>();
             var config1 = new CostConfiguration() {

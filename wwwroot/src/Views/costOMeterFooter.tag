@@ -9,9 +9,14 @@
             </div>
             <div class="col">
                 <a href="#" onclick = { stopCalc } class={ opts.viewModel.getIsPausable() ? '' : 'disabled-control' }>
-                    <img src="img/pause.png" alt="pauseplay" class="control-button" />
+                    <img src="img/pause.png" alt="pause" class="control-button" />
                 </a>
             </div>
+            <div class="col">
+                <a href="#" onclick = { loadCostConfiguration }>
+                    <img src="img/fetch.png" alt="load from api" class="control-button" />
+                </a>
+            </div>            
         </div>
         <div class="row">
             <div class="col">
@@ -36,6 +41,16 @@
                 opts.viewModel.stopCalculator();
             }
         }
+
+        loadCostConfiguration(e) {
+            jQuery.get('api/Configs/1', function(data, status) {
+                opts.viewModel.loadCostConfigurationResult(data);
+                // todo: error handling
+                riot.update();
+            });
+        }
+
+        
 
         this.on('mount', function () {
             console.log('Footer mounted');
