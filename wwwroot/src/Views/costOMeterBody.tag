@@ -13,15 +13,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 toned-down">
-                    { hourlyCost } kr / h
+                <div class="col-5 toned-down">
+                    { hourlyCost } {opts.viewModel.currency} / h
+                </div>
+                <div class="col-7 toned-down">
+                    { getTotalCostFormatted() } {opts.viewModel.currency}
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 toned-down">
-                    { getTotalCostFormatted() } kr
-                </div>
-            </div>            
         </div>
     </div>
 </div>
@@ -102,6 +100,24 @@
   </div>
 </div>
 
+<!-- Set currency modal -->
+<div class="modal fade bg-black" id="setCurrencyModal" tabindex="-1" role="dialog" aria-labelledby="setCurrencyModalLabel" aria-hidden="true">
+  <div class="modal-dialog bg-black" role="document">
+    <div class="modal-content bg-black">
+      <div class="modal-header bg-black">
+        <h5 class="modal-title bg-black" id="setCurrencyModalLabel">Set currency</h5>
+      </div> 
+      <div class="modal-body bg-black">
+        <input id="currencyName" placeholder="Currency" class="w-full" maxlength="5" value={opts.viewModel.currency} />
+      </div>
+      <div class="modal-footer bg-black">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-outline-primary" onclick={setCurrency}>Set</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   <script>
 
     loadCostConfiguration(e) {
@@ -118,6 +134,8 @@
                 opts.viewModel.loadCostConfigurationResult(data);
                     // todo: error handling
                     riot.update();
+                }).fail(function(data) {
+                    alert('Failed to load config from api: ' + data.statusText);
                 });
         }
     }
@@ -125,7 +143,13 @@
     saveCostConfiguration(e) {
         // todo: implement..
         $('#saveConfigModal').modal('hide');
-    }      
+    }
+
+    setCurrency(e) {
+        opts.viewModel.currency = $('#currencyName').val();
+        riot.update();
+        $('#setCurrencyModal').modal('hide');
+    }
 
     remove(e) {
         opts.viewModel.removeConsultant(e.item);

@@ -2,12 +2,12 @@
     <div class="container center-content">
         <div class="row">
             <div class="col">
-                <span class="lead m-left-15 big-text">{ opts.viewModel.getTotalCost() } kr</span>
+                <span class="lead m-left-15 big-text">{ opts.viewModel.getTotalCost() } { opts.viewModel.currency }</span>
             </div>
         </div>
         <div class="row m-bottom-20">
             <div class="col">
-                <span class="toned-down m-left-15">Total hourly: { opts.viewModel.getTotalHourlyCost() } kr / h</span>
+                <a href="#" role="button" class="toned-down m-left-15" onclick={showCurrencyModal}>Total hourly: { opts.viewModel.getTotalHourlyCost() } { opts.viewModel.currency } / h</a>
             </div>
         </div>
         <div class="row">
@@ -55,14 +55,19 @@
                 opts.viewModel.stopCalculator();
             }
         }
+
+        showCurrencyModal(e) {
+            $('#setCurrencyModal').modal('show');
+        }
         
         loadAllCostConfigurations(e) {
             $('#loadConfigsModal').modal('show');
 
             jQuery.get('api/Configs', function(data, status) {
                 opts.viewModel.loadAllConfigurations(data);
-                    // todo: error handling
                     riot.update();
+                }).fail(function(data) {
+                    alert('Failed to load configs from api: ' + data.statusText);
                 });
         }
 

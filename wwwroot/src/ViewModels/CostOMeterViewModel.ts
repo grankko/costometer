@@ -6,6 +6,7 @@ namespace ViewModels {
         public consultants: ViewModels.Consultant[] = [];
         public loadedConfigurations: Models.Configuration[] = [];
         public onTick;
+        public currency: string;
 
         private timerInterval: number;
         /** Id of last Consultant generated */
@@ -17,6 +18,7 @@ namespace ViewModels {
             this.timerInterval = newTimerInterval;
             this.lastId = 0;
             this.deletedConsultantCosts = 0;
+            this.currency = 'SEK'
         }
 
         public getTotalHourlyCost(): string {

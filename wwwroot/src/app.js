@@ -70,6 +70,7 @@ var ViewModels;
             this.timerInterval = newTimerInterval;
             this.lastId = 0;
             this.deletedConsultantCosts = 0;
+            this.currency = 'SEK';
         }
         CostOMeterViewModel.prototype.getTotalHourlyCost = function () {
             var totalHourlySummed = 0;
