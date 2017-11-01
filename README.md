@@ -11,7 +11,7 @@ Live at: https://granaker.se/costometer
 
 ### Todo
 - Build support for setting currency (defaults to kr)
-- Build backend to save/load configurations
+- Build backend to save/load configurations (ongoing)
 
 ### Notes
 - Publish.bat builds and replaces web.config with web.production.config. Ignore it.

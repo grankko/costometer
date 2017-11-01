@@ -1,6 +1,15 @@
 <costOMeterFooter>
-    <div class="center-content">
-
+    <div class="container center-content">
+        <div class="row">
+            <div class="col">
+                <span class="lead m-left-15 big-text">{ opts.viewModel.getTotalCost() } kr</span>
+            </div>
+        </div>
+        <div class="row m-bottom-20">
+            <div class="col">
+                <span class="toned-down m-left-15">Total hourly: { opts.viewModel.getTotalHourlyCost() } kr / h</span>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <a href="#" onclick = { runCalc } class={ opts.viewModel.getIsRunnable() ? '' : 'disabled-control' }>
@@ -13,20 +22,25 @@
                 </a>
             </div>
             <div class="col">
-                <a href="#" onclick = { loadCostConfiguration }>
+                <a href="#" role="button" data-toggle="modal" data-target="#addResourceModal">
+                    <img src="img/add.png" alt="add resource" class="control-button" />
+                </a>
+            </div>
+            <div class="col">
+                <a href="#" role="button" data-toggle="modal" data-target="#resetConfigModal">
+                    <img src="img/reset.png" alt="reset all resources" class="control-button" />
+                </a>
+            </div>                        
+            <div class="col">
+                <a href="#" role="button" data-toggle="modal" data-target="#loadConfigsModal">
                     <img src="img/fetch.png" alt="load from api" class="control-button" />
                 </a>
-            </div>            
-        </div>
-        <div class="row">
-            <div class="col">
-                <span class="lead m-left-15">Total cost: { opts.viewModel.getTotalCost() } kr</span>
             </div>
-        </div>
-        <div class="row">
             <div class="col">
-                <span class="toned-down m-left-15">Total hourly: { opts.viewModel.getTotalHourlyCost() } kr / h</span>
-            </div>
+                <a href="#" role="button" data-toggle="modal" data-target="#saveConfigModal">
+                    <img src="img/save.png" alt="save api" class="control-button" />
+                </a>
+            </div>                                        
         </div>
     </div>
     <script>
@@ -40,17 +54,7 @@
             if (opts.viewModel.getIsPausable()) {
                 opts.viewModel.stopCalculator();
             }
-        }
-
-        loadCostConfiguration(e) {
-            jQuery.get('api/Configs/1', function(data, status) {
-                opts.viewModel.loadCostConfigurationResult(data);
-                // todo: error handling
-                riot.update();
-            });
-        }
-
-        
+        }  
 
         this.on('mount', function () {
             console.log('Footer mounted');

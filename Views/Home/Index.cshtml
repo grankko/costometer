@@ -8,7 +8,7 @@
   <head>
     <title>cost-o-meter</title>
     <!-- Source available at https://github.com/grankko/costometer -->
-    <!-- Required meta tags -->
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <environment names="Production">
@@ -16,7 +16,7 @@
     </environment>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?@(DateTime.Now.ToString())">
   </head>
   <body>
   <header>
@@ -33,7 +33,7 @@
     <script src="src/Views/costOMeterBody.tag" type="riot/tag"></script>
     <script src="src/Views/costOMeterFooter.tag" type="riot/tag"></script>
     <script src="https://rawgit.com/riot/riot/master/riot%2Bcompiler.min.js"></script>
-    <script src="src/app.js"></script>
+    <script src="src/app.js?@(DateTime.Now.ToString())"></script>
     <script>
         riot.mount('costOMeterBody', {viewModel: vm})
         riot.mount('costOMeterFooter', {viewModel: vm})

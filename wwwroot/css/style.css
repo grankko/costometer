@@ -10,7 +10,7 @@ html {
   html body .container-fluid.body-content {
     position: absolute;
     top: 150px;
-    bottom: 130px;
+    bottom: 180px;
     right: 0;
     left: 0;
     overflow-y: auto;
@@ -30,7 +30,7 @@ html {
       right: 0;
       bottom: 0;
       background-color: #000;
-      height: 130px;
+      height: 180px;
   }
 
   .center-content {
@@ -47,7 +47,12 @@ html {
   }
 
   .control-button {
-    height: 50px; margin-left: 15px;
+    height: 25px;
+  }
+
+  .del-button {
+    height: 25px;
+    float: right;
   }
 
   .m-left-15{
@@ -58,6 +63,10 @@ html {
     margin-top: 20px;
   }
 
+  .m-bottom-20 {
+    margin-bottom: 20px;
+  }
+
   .w-full {
     width: 100%;
   }
@@ -66,23 +75,17 @@ html {
     opacity: 0.2;
   }
 
-  .del-button {
-    height: 50px;
-    float: right;
-  }
-
-  .add-button {
-    height: 50px;
-    float: right;
-  }
-
   .toned-down {
     color: #999;
   }
 
   .logo-img {
-    height: 150px;
+    width: 330px;
     margin: auto;
     display: block;
     padding-top: 20px;
+  }
+
+  .big-text {
+    font-size: 2.5em;
   }

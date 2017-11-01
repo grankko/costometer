@@ -28,18 +28,21 @@ namespace Web.Costometer.Controllers
                         var configs = new List<CostConfiguration>();
             var config1 = new CostConfiguration() {
                 Id = 1,
-                Consultants = new List<Consultant>()
+                Consultants = new List<Consultant>(),
+                Name="Test configuration 1"
             };
-            config1.Consultants.Add(new Consultant() { Name = "Anders", HourlyCost = 1000});
-            config1.Consultants.Add(new Consultant() { Name = "Per", HourlyCost = 1100});
-            config1.Consultants.Add(new Consultant() { Name = "Fredrik", HourlyCost = 1200});
+            config1.Consultants.Add(new Consultant() { Name = "Developer 1", HourlyCost = 1000});
+            config1.Consultants.Add(new Consultant() { Name = "Developer 2", HourlyCost = 1100});
+            config1.Consultants.Add(new Consultant() { Name = "Tester 1", HourlyCost = 950});
+            config1.Consultants.Add(new Consultant() { Name = "Tester 2", HourlyCost = 1150});
 
             var config2 = new CostConfiguration() {
                 Id = 2,
-                Consultants = new List<Consultant>()
+                Consultants = new List<Consultant>(),
+                Name="Test configuration 2"
             };
-            config2.Consultants.Add(new Consultant() { Name = "Anders", HourlyCost = 900});
-            config2.Consultants.Add(new Consultant() { Name = "Per", HourlyCost = 950});
+            config2.Consultants.Add(new Consultant() { Name = "Developer 1", HourlyCost = 1100});
+            config2.Consultants.Add(new Consultant() { Name = "Tester 1", HourlyCost = 950});
             
             configs.Add(config1);
             configs.Add(config2);
