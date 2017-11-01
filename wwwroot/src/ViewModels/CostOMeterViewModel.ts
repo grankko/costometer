@@ -23,7 +23,7 @@ namespace ViewModels {
                 totalHourlySummed = Number(totalHourlySummed) + Number(cons.hourlyCost);
             }
 
-            return totalHourlySummed.toFixed(2);
+            return totalHourlySummed.toFixed(0);
         }
 
         public getTotalCost(): string {

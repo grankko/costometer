@@ -67,7 +67,7 @@ var ViewModels;
                 var cons = _a[_i];
                 totalHourlySummed = Number(totalHourlySummed) + Number(cons.hourlyCost);
             }
-            return totalHourlySummed.toFixed(2);
+            return totalHourlySummed.toFixed(0);
         };
         CostOMeterViewModel.prototype.getTotalCost = function () {
             var totalCostSummed = 0;
