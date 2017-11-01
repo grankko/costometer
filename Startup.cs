@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace web.costometer
 {
-   
+
     public class Startup
     {
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -27,9 +27,7 @@ namespace web.costometer
             loggerFactory.AddConsole();
 
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
 
             var provider = new FileExtensionContentTypeProvider();
             provider.Mappings[".tag"] = "text/plain";
@@ -37,7 +35,7 @@ namespace web.costometer
             {
                 ContentTypeProvider = provider
             });
-            
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

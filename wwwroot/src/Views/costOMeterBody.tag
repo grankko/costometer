@@ -32,9 +32,6 @@
     <div class="modal-content bg-black">
       <div class="modal-header bg-black">
         <h5 class="modal-title bg-black" id="addResourceModalLabel">Add resource</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <div class="modal-body bg-black">
         <input id="inputName" placeholder="Name" class="w-full" />
@@ -54,9 +51,6 @@
     <div class="modal-content bg-black">
       <div class="modal-header bg-black">
         <h5 class="modal-title bg-black" id="resetConfigModalLabel">Reset configuration</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <div class="modal-body bg-black">
         Reset calculator and remove all resources?
@@ -75,12 +69,11 @@
     <div class="modal-content bg-black">
       <div class="modal-header bg-black">
         <h5 class="modal-title bg-black" id="loadConfigsModalLabel">Load configuration</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <div class="modal-body bg-black">
-        //todo: implement.. will now just load a test config from api
+        <ul class="list-group bg-black">
+            <li class="list-group-item bg-black" data-configid={id} each={ opts.viewModel.loadedConfigurations}>{name}</li>
+        </ul>
       </div>
       <div class="modal-footer bg-black">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
@@ -96,10 +89,7 @@
     <div class="modal-content bg-black">
       <div class="modal-header bg-black">
         <h5 class="modal-title bg-black" id="saveConfigModalLabel">Save configuration</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+      </div> 
       <div class="modal-body bg-black">
         //todo: implement
         <input id="inputName" placeholder="Configuratiton name" class="w-full" />
@@ -115,14 +105,21 @@
   <script>
 
     loadCostConfiguration(e) {
-            
-        jQuery.get('api/Configs/1', function(data, status) {
-            opts.viewModel.loadCostConfigurationResult(data);
-                // todo: error handling
-                riot.update();
-            });
+        
+        // find first and only active (selected) item and get id
+        let selectedId = $("li.active").first().attr("data-configid");
 
-        $('#loadConfigsModal').modal('hide');
+        if (selectedId) {
+
+            $('#loadConfigsModal').modal('hide');
+
+            let apiPath = 'api/Configs/' + selectedId
+            jQuery.get(apiPath, function(data, status) {
+                opts.viewModel.loadCostConfigurationResult(data);
+                    // todo: error handling
+                    riot.update();
+                });
+        }
     }
 
     saveCostConfiguration(e) {

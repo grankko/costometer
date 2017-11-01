@@ -22,7 +22,7 @@
                 </a>
             </div>
             <div class="col">
-                <a href="#" role="button" data-toggle="modal" data-target="#addResourceModal">
+                <a href="#" role="button" data-toggle="modal" data-target="#addResourceModal" onclick={loadAllConfigurations}>
                     <img src="img/add.png" alt="add resource" class="control-button" />
                 </a>
             </div>
@@ -32,7 +32,7 @@
                 </a>
             </div>                        
             <div class="col">
-                <a href="#" role="button" data-toggle="modal" data-target="#loadConfigsModal">
+                <a href="#" role="button" onclick={loadAllCostConfigurations}>
                     <img src="img/fetch.png" alt="load from api" class="control-button" />
                 </a>
             </div>
@@ -54,7 +54,17 @@
             if (opts.viewModel.getIsPausable()) {
                 opts.viewModel.stopCalculator();
             }
-        }  
+        }
+        
+        loadAllCostConfigurations(e) {
+            $('#loadConfigsModal').modal('show');
+
+            jQuery.get('api/Configs', function(data, status) {
+                opts.viewModel.loadAllConfigurations(data);
+                    // todo: error handling
+                    riot.update();
+                });
+        }
 
         this.on('mount', function () {
             console.log('Footer mounted');

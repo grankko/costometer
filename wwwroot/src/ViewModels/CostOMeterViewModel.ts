@@ -1,8 +1,10 @@
 ///<reference path="../ViewModels/Consultant.ts" />
+///<reference path="../Models/Configuration.ts" />
 namespace ViewModels {
     export class CostOMeterViewModel {
 
         public consultants: ViewModels.Consultant[] = [];
+        public loadedConfigurations: Models.Configuration[] = [];
         public onTick;
 
         private timerInterval: number;
@@ -10,14 +12,14 @@ namespace ViewModels {
         private lastId: number;
         /** Cost of previously active and now deleted Consultants */
         private deletedConsultantCosts: number;
-        
+
         constructor(newTimerInterval: number) {
             this.timerInterval = newTimerInterval;
             this.lastId = 0;
             this.deletedConsultantCosts = 0;
         }
 
-        public getTotalHourlyCost(): string {            
+        public getTotalHourlyCost(): string {
             let totalHourlySummed: number = 0;
             for (let cons of this.consultants) {
                 totalHourlySummed = Number(totalHourlySummed) + Number(cons.hourlyCost);
@@ -31,21 +33,21 @@ namespace ViewModels {
             for (let cons of this.consultants) {
                 totalCostSummed = Number(totalCostSummed) + Number(cons.getTotalCost());
             }
-            
+
             // Include costs of previously active and now deleted consultants
             totalCostSummed = totalCostSummed + this.deletedConsultantCosts;
 
             return totalCostSummed.toFixed(2);
         }
 
-        public getIsRunnable(): boolean {            
+        public getIsRunnable(): boolean {
             if (this.consultants.length === 0)
                 return false;
 
-            return ! this.getIsRunning();
+            return !this.getIsRunning();
         }
 
-        public getIsPausable(): boolean {            
+        public getIsPausable(): boolean {
             if (this.consultants.length === 0)
                 return false;
 
@@ -79,8 +81,8 @@ namespace ViewModels {
             }
         }
 
-        public addConsultant(name :string, cost :number) :ViewModels.Consultant {
-           
+        public addConsultant(name: string, cost: number): ViewModels.Consultant {
+
             console.log('Adding consultant.');
 
             this.lastId = this.lastId + 1;
@@ -92,7 +94,7 @@ namespace ViewModels {
             return newConsultant;
         }
 
-        public removeConsultant(item :ViewModels.Consultant) {
+        public removeConsultant(item: ViewModels.Consultant) {
             console.log('Removing consultant with id ' + item.id);
             let itemCost = item.getTotalCost();
 
@@ -105,7 +107,17 @@ namespace ViewModels {
             this.deletedConsultantCosts = Number(this.deletedConsultantCosts) + Number(itemCost);
         }
 
-        public loadCostConfigurationResult(data :any) {
+        public loadAllConfigurations(data: any) {
+            this.loadedConfigurations = [];
+            for (let i = 0; i < data.length; i++) {
+                let parsedConfig = new Models.Configuration();
+                parsedConfig.id = data[i].id;
+                parsedConfig.name = data[i].name;
+                this.loadedConfigurations.push(parsedConfig);
+            }
+        }
+
+        public loadCostConfigurationResult(data: any) {
 
             this.resetViewModel();
 

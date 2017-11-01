@@ -24,26 +24,34 @@ namespace Web.Costometer.Controllers
             return BuildTestSet().First(cc => cc.Id == id);
         }
 
-        private List<CostConfiguration> BuildTestSet() {
-                        var configs = new List<CostConfiguration>();
-            var config1 = new CostConfiguration() {
+        [HttpPost]
+        public ActionResult Add(CostConfiguration configuration) {
+            throw new NotImplementedException();
+        }
+
+        private List<CostConfiguration> BuildTestSet()
+        {
+            var configs = new List<CostConfiguration>();
+            var config1 = new CostConfiguration()
+            {
                 Id = 1,
                 Consultants = new List<Consultant>(),
-                Name="Test configuration 1"
+                Name = "Test configuration 1"
             };
-            config1.Consultants.Add(new Consultant() { Name = "Developer 1", HourlyCost = 1000});
-            config1.Consultants.Add(new Consultant() { Name = "Developer 2", HourlyCost = 1100});
-            config1.Consultants.Add(new Consultant() { Name = "Tester 1", HourlyCost = 950});
-            config1.Consultants.Add(new Consultant() { Name = "Tester 2", HourlyCost = 1150});
+            config1.Consultants.Add(new Consultant() { Name = "Developer 1", HourlyCost = 1000 });
+            config1.Consultants.Add(new Consultant() { Name = "Developer 2", HourlyCost = 1100 });
+            config1.Consultants.Add(new Consultant() { Name = "Tester 1", HourlyCost = 950 });
+            config1.Consultants.Add(new Consultant() { Name = "Tester 2", HourlyCost = 1150 });
 
-            var config2 = new CostConfiguration() {
+            var config2 = new CostConfiguration()
+            {
                 Id = 2,
                 Consultants = new List<Consultant>(),
-                Name="Test configuration 2"
+                Name = "Test configuration 2"
             };
-            config2.Consultants.Add(new Consultant() { Name = "Developer 1", HourlyCost = 1100});
-            config2.Consultants.Add(new Consultant() { Name = "Tester 1", HourlyCost = 950});
-            
+            config2.Consultants.Add(new Consultant() { Name = "Developer 1", HourlyCost = 1100 });
+            config2.Consultants.Add(new Consultant() { Name = "Tester 1", HourlyCost = 950 });
+
             configs.Add(config1);
             configs.Add(config2);
 

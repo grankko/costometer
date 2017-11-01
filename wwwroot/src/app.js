@@ -52,11 +52,21 @@ var ViewModels;
     }());
     ViewModels.Consultant = Consultant;
 })(ViewModels || (ViewModels = {}));
+var Models;
+(function (Models) {
+    var Configuration = (function () {
+        function Configuration() {
+        }
+        return Configuration;
+    }());
+    Models.Configuration = Configuration;
+})(Models || (Models = {}));
 var ViewModels;
 (function (ViewModels) {
     var CostOMeterViewModel = (function () {
         function CostOMeterViewModel(newTimerInterval) {
             this.consultants = [];
+            this.loadedConfigurations = [];
             this.timerInterval = newTimerInterval;
             this.lastId = 0;
             this.deletedConsultantCosts = 0;
@@ -128,6 +138,15 @@ var ViewModels;
             console.log('Index of this one is: ' + index);
             this.consultants.splice(index, 1);
             this.deletedConsultantCosts = Number(this.deletedConsultantCosts) + Number(itemCost);
+        };
+        CostOMeterViewModel.prototype.loadAllConfigurations = function (data) {
+            this.loadedConfigurations = [];
+            for (var i = 0; i < data.length; i++) {
+                var parsedConfig = new Models.Configuration();
+                parsedConfig.id = data[i].id;
+                parsedConfig.name = data[i].name;
+                this.loadedConfigurations.push(parsedConfig);
+            }
         };
         CostOMeterViewModel.prototype.loadCostConfigurationResult = function (data) {
             this.resetViewModel();
