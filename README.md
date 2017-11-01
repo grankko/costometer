@@ -13,10 +13,18 @@ Live at: https://granaker.se/costometer
 - Bootstrap
 - jQuery
 - listgroupjs (http://rickardn.github.io/listgroup.js/)
+- 
+### Known issues
+- listgroupjs sometime missbehaves. Items don't get selectable (load configuration modal).
 
 ### Todo
 - ~~Build support for setting currency (defaults to )kr~~ DONE
 - Build backend to save/load configurations (ongoing)
+- Refactor
+-- TypeScript Modules
+-- Break up ViewModel and introduce client services
+-- UnitTest (api and client)
+-- Break up RiotJS tags. Seperate modal dialogs.
 
 ### Notes
 - Publish.bat builds and replaces web.config with web.production.config. Ignore it.

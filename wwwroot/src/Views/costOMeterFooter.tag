@@ -2,7 +2,9 @@
     <div class="container center-content">
         <div class="row">
             <div class="col">
-                <span class="lead m-left-15 big-text">{ opts.viewModel.getTotalCost() } { opts.viewModel.currency }</span>
+                <a href="#" role="button" onclick={showCurrencyModal} style="color: #fff">
+                    <span class="lead m-left-15 big-text">{ opts.viewModel.getTotalCost() } { opts.viewModel.currency }</span>
+                </a>
             </div>
         </div>
         <div class="row m-bottom-20">
