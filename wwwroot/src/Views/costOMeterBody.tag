@@ -75,7 +75,10 @@
       </div>
       <div class="modal-footer bg-black">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-outline-primary" onclick={loadCostConfiguration}>Load</button>
+        <button type="button" class="btn btn-outline-primary" onclick={loadCostConfiguration}>Load existing</button>
+        <button id="loadFromFileButton" type="button" class="btn btn-outline-primary" onclick={showFileDialog}>
+          Load from file <input id="file" type="file" style="display: none;" onChange={loadCostConfigurationFromJSON} />
+        </button>        
       </div>
     </div>
   </div>
@@ -89,8 +92,7 @@
         <h5 class="modal-title bg-black" id="saveConfigModalLabel">Save configuration</h5>
       </div> 
       <div class="modal-body bg-black">
-        //todo: implement
-        <input id="inputName" placeholder="Configuratiton name" class="w-full" />
+        <input id="inputNewConfigurationName" placeholder="Configuratiton name" class="w-full" />
       </div>
       <div class="modal-footer bg-black">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
@@ -120,6 +122,20 @@
 
   <script>
 
+    showFileDialog(e) {
+      $("#file").click();
+    }
+
+    saveCostConfiguration(e) {
+      let newName = $('#inputNewConfigurationName').val();
+      if (!isEmptyOrSpaces(newName)) {
+        let jsonData = opts.viewModel.serializeCurrentSetup(newName);
+        download(jsonData,newName);
+        $('#saveConfigModal').modal('hide');
+        $('#inputNewConfigurationName').val('');
+      }
+    }
+    
     loadCostConfiguration(e) {
         
         // find first and only active (selected) item and get id
@@ -138,11 +154,6 @@
                     alert('Failed to load config from api: ' + data.statusText);
                 });
         }
-    }
-
-    saveCostConfiguration(e) {
-        // todo: implement..
-        $('#saveConfigModal').modal('hide');
     }
 
     setCurrency(e) {
@@ -188,8 +199,52 @@
         return str === null || str.match(/^ *$/) !== null;
     }
 
+    function download(text, name) {
+      var a = document.createElement("a");
+      var file = new Blob([text], {type: 'application/json'});
+      a.href = URL.createObjectURL(file);
+      a.download = name + '.json';
+      a.click();
+    }
+
+    loadCostConfigurationFromJSON(e) {
+      var reader = new FileReader();
+      reader.onload = onReaderLoad;
+      reader.onerror = onReaderError;
+      reader.readAsText(event.target.files[0]);
+    }
+
+    function onReaderLoad(event){
+      try {
+        console.log(event.target.result);
+        var obj = JSON.parse(event.target.result);
+        opts.viewModel.loadCostConfigurationResult(obj);
+
+      } catch (error) {
+        alert ('Failed to read input :(')
+      }
+    }
+
+    function onReaderError(event){
+        alert('Failed to read input :(');
+    }    
+
+    function supportFormData() {
+      if (window.File && window.FileReader && window.FileList && window.Blob)
+        return true;
+
+      return false;
+    }
+
     this.on('mount', function () {
         console.log('Body mounted');
+
+        if (!supportFormData()) {
+          $('#saveLinkButton').hide();
+          $('#saveLinkButtonImage').hide();
+          $('#loadFromFileButton').hide();
+        }
+
         opts.viewModel.onTick = () => {
             riot.update();
         }

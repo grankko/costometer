@@ -24,11 +24,6 @@ namespace Web.Costometer.Controllers
             return BuildTestSet().First(cc => cc.Id == id);
         }
 
-        [HttpPost]
-        public ActionResult Add(CostConfiguration configuration) {
-            throw new NotImplementedException();
-        }
-
         private List<CostConfiguration> BuildTestSet()
         {
             var configs = new List<CostConfiguration>();
@@ -36,24 +31,42 @@ namespace Web.Costometer.Controllers
             {
                 Id = 1,
                 Consultants = new List<Consultant>(),
-                Name = "Test configuration 1"
+                Name = "A-team"
             };
-            config1.Consultants.Add(new Consultant() { Name = "Developer 1", HourlyCost = 1000 });
-            config1.Consultants.Add(new Consultant() { Name = "Developer 2", HourlyCost = 1100 });
-            config1.Consultants.Add(new Consultant() { Name = "Tester 1", HourlyCost = 950 });
-            config1.Consultants.Add(new Consultant() { Name = "Tester 2", HourlyCost = 1150 });
+            config1.Consultants.Add(new Consultant() { Name = "John Smith", HourlyCost = 1000 });
+            config1.Consultants.Add(new Consultant() { Name = "Templeton Peck", HourlyCost = 1100 });
+            config1.Consultants.Add(new Consultant() { Name = "H.M. Murdock", HourlyCost = 950 });
+            config1.Consultants.Add(new Consultant() { Name = "Bosco Albert", HourlyCost = 1150 });
 
             var config2 = new CostConfiguration()
             {
                 Id = 2,
                 Consultants = new List<Consultant>(),
-                Name = "Test configuration 2"
+                Name = "Trailer Park Boys"
             };
-            config2.Consultants.Add(new Consultant() { Name = "Developer 1", HourlyCost = 1100 });
-            config2.Consultants.Add(new Consultant() { Name = "Tester 1", HourlyCost = 950 });
+            config2.Consultants.Add(new Consultant() { Name = "Ricky LaFleur", HourlyCost = 1100 });
+            config2.Consultants.Add(new Consultant() { Name = "Julia", HourlyCost = 950 });
+            config2.Consultants.Add(new Consultant() { Name = "Bubbles", HourlyCost = 950 });
+            config2.Consultants.Add(new Consultant() { Name = "Jim Lahey", HourlyCost = 900 });
+            config2.Consultants.Add(new Consultant() { Name = "Randy Bobandy", HourlyCost = 700 });
+
+            var config3 = new CostConfiguration()
+            {
+                Id = 3,
+                Consultants = new List<Consultant>(),
+                Name = "Team Pickle Rick"
+            };
+            config3.Consultants.Add(new Consultant() { Name = "Rick Sanchez", HourlyCost = 1050 });
+            config3.Consultants.Add(new Consultant() { Name = "Morty Smith", HourlyCost = 900 });
+            config3.Consultants.Add(new Consultant() { Name = "Beth Smith", HourlyCost = 950 });
+            config3.Consultants.Add(new Consultant() { Name = "Jerry Smith", HourlyCost = 900 });
+            config3.Consultants.Add(new Consultant() { Name = "Summer Smith", HourlyCost = 600 });
+            config3.Consultants.Add(new Consultant() { Name = "Mr Meeseeks", HourlyCost = 850 });
+            config3.Consultants.Add(new Consultant() { Name = "Dr Xenon Bloom", HourlyCost = 900 });
 
             configs.Add(config1);
             configs.Add(config2);
+            configs.Add(config3);
 
             return configs;
         }

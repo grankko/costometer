@@ -1,10 +1,11 @@
 ///<reference path="../ViewModels/Consultant.ts" />
-///<reference path="../Models/Configuration.ts" />
+///<reference path="../Models/CostConfiguration.ts" />
+///<reference path="../Models/Consultant.ts" />
 namespace ViewModels {
     export class CostOMeterViewModel {
 
         public consultants: ViewModels.Consultant[] = [];
-        public loadedConfigurations: Models.Configuration[] = [];
+        public loadedConfigurations: Models.CostConfiguration[] = [];
         public onTick;
         public currency: string;
 
@@ -54,6 +55,13 @@ namespace ViewModels {
                 return false;
 
             return this.getIsRunning();
+        }
+
+        public getIsSaveable(): boolean {
+            if (this.consultants.length === 0)
+                return false;
+
+            return true;
         }
 
         public getIsRunning(): boolean {
@@ -112,7 +120,7 @@ namespace ViewModels {
         public loadAllConfigurations(data: any) {
             this.loadedConfigurations = [];
             for (let i = 0; i < data.length; i++) {
-                let parsedConfig = new Models.Configuration();
+                let parsedConfig = new Models.CostConfiguration();
                 parsedConfig.id = data[i].id;
                 parsedConfig.name = data[i].name;
                 this.loadedConfigurations.push(parsedConfig);
@@ -128,6 +136,21 @@ namespace ViewModels {
 
                 this.addConsultant(data.consultants[i].name, Number(data.consultants[i].hourlyCost));
             }
+        }
+
+        public serializeCurrentSetup(configName: string) :string {
+            let currentConfig = new Models.CostConfiguration();
+            currentConfig.id = -1;
+            currentConfig.name = configName;
+            
+            for (let cons of this.consultants) {
+                let apiConsultant = new Models.Consultant();
+                apiConsultant.hourlyCost = cons.hourlyCost;
+                apiConsultant.name = cons.name;
+                currentConfig.consultants.push(apiConsultant);
+            }
+
+            return JSON.stringify(currentConfig);            
         }
 
         private resetViewModel() {

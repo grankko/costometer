@@ -54,12 +54,22 @@ var ViewModels;
 })(ViewModels || (ViewModels = {}));
 var Models;
 (function (Models) {
-    var Configuration = (function () {
-        function Configuration() {
+    var Consultant = (function () {
+        function Consultant() {
         }
-        return Configuration;
+        return Consultant;
     }());
-    Models.Configuration = Configuration;
+    Models.Consultant = Consultant;
+})(Models || (Models = {}));
+var Models;
+(function (Models) {
+    var CostConfiguration = (function () {
+        function CostConfiguration() {
+            this.consultants = [];
+        }
+        return CostConfiguration;
+    }());
+    Models.CostConfiguration = CostConfiguration;
 })(Models || (Models = {}));
 var ViewModels;
 (function (ViewModels) {
@@ -98,6 +108,11 @@ var ViewModels;
             if (this.consultants.length === 0)
                 return false;
             return this.getIsRunning();
+        };
+        CostOMeterViewModel.prototype.getIsSaveable = function () {
+            if (this.consultants.length === 0)
+                return false;
+            return true;
         };
         CostOMeterViewModel.prototype.getIsRunning = function () {
             var isRunning = false;
@@ -143,7 +158,7 @@ var ViewModels;
         CostOMeterViewModel.prototype.loadAllConfigurations = function (data) {
             this.loadedConfigurations = [];
             for (var i = 0; i < data.length; i++) {
-                var parsedConfig = new Models.Configuration();
+                var parsedConfig = new Models.CostConfiguration();
                 parsedConfig.id = data[i].id;
                 parsedConfig.name = data[i].name;
                 this.loadedConfigurations.push(parsedConfig);
@@ -154,6 +169,19 @@ var ViewModels;
             for (var i = 0; i < data.consultants.length; i++) {
                 this.addConsultant(data.consultants[i].name, Number(data.consultants[i].hourlyCost));
             }
+        };
+        CostOMeterViewModel.prototype.serializeCurrentSetup = function (configName) {
+            var currentConfig = new Models.CostConfiguration();
+            currentConfig.id = -1;
+            currentConfig.name = configName;
+            for (var _i = 0, _a = this.consultants; _i < _a.length; _i++) {
+                var cons = _a[_i];
+                var apiConsultant = new Models.Consultant();
+                apiConsultant.hourlyCost = cons.hourlyCost;
+                apiConsultant.name = cons.name;
+                currentConfig.consultants.push(apiConsultant);
+            }
+            return JSON.stringify(currentConfig);
         };
         CostOMeterViewModel.prototype.resetViewModel = function () {
             if (this.getIsPausable()) {

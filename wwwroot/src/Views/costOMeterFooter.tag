@@ -39,8 +39,8 @@
                 </a>
             </div>
             <div class="col">
-                <a href="#" role="button" data-toggle="modal" data-target="#saveConfigModal">
-                    <img src="img/save.png" alt="save api" class="control-button" />
+                <a href="#" id="saveLinkButton" role="button" onclick={showSaveDialog} class={ opts.viewModel.getIsSaveable() ? '' : 'disabled-control' }>
+                    <img id="saveLinkButtonImage" src="img/save.png" alt="save api" class="control-button" />
                 </a>
             </div>                                        
         </div>
@@ -71,6 +71,12 @@
                 }).fail(function(data) {
                     alert('Failed to load configs from api: ' + data.statusText);
                 });
+        }
+
+        showSaveDialog(e) {
+            if (opts.viewModel.getIsSaveable()) {
+                $('#saveConfigModal').modal('show');
+            }
         }
 
         this.on('mount', function () {
