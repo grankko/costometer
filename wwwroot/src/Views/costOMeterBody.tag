@@ -219,10 +219,11 @@
         console.log(event.target.result);
         var obj = JSON.parse(event.target.result);
         opts.viewModel.loadCostConfigurationResult(obj);
-
+        $('#loadConfigsModal').modal('hide');
       } catch (error) {
         alert ('Failed to read input :(')
       }
+      riot.update();
     }
 
     function onReaderError(event){
