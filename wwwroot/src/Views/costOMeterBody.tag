@@ -70,10 +70,10 @@
       </div>
       <div class="modal-body bg-black">        
         <textarea id="configurationLoadTextArea" rows="5" class="w-full" placeholder="Paste JSON here"></textarea>
+        <button type="button" class="btn btn-outline-primary" onclick={loadCostConfigurationFromText}>Load from input</button>        
       </div>
       <div class="modal-footer bg-black">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-outline-primary" onclick={loadCostConfigurationFromText}>Load</button>
         <button type="button" class="btn btn-outline-primary" onclick={loadCostConfigurationShowStep2}>Load from api</button>
         <button id="loadFromFileButton" type="button" class="btn btn-outline-primary" onclick={showFileDialog}>
           Load from file <input id="file" type="file" style="display: none;" onChange={loadCostConfigurationFromJSON} />
