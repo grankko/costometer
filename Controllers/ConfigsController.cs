@@ -45,7 +45,7 @@ namespace Web.Costometer.Controllers
                 Name = "Trailer Park Boys"
             };
             config2.Consultants.Add(new Consultant() { Name = "Ricky LaFleur", HourlyCost = 1100 });
-            config2.Consultants.Add(new Consultant() { Name = "Julia", HourlyCost = 950 });
+            config2.Consultants.Add(new Consultant() { Name = "Julian", HourlyCost = 950 });
             config2.Consultants.Add(new Consultant() { Name = "Bubbles", HourlyCost = 950 });
             config2.Consultants.Add(new Consultant() { Name = "Jim Lahey", HourlyCost = 900 });
             config2.Consultants.Add(new Consultant() { Name = "Randy Bobandy", HourlyCost = 700 });

@@ -7,7 +7,7 @@
                     <span class="lead">{ name }</span>
                 </div>
                 <div class="col-2">
-                    <a href="#" onclick={ remove }>
+                    <a href="javascript:void(0)" onclick={ remove }>
                         <img src="img/del.png" alt="delete resource" class="del-button" />
                     </a>
                 </div>
@@ -61,24 +61,44 @@
   </div>
 </div>
 
-<!-- Load configuration modal -->
-<div class="modal fade bg-black" id="loadConfigsModal" tabindex="-1" role="dialog" aria-labelledby="loadConfigsModalLabel" aria-hidden="true">
+<!-- Load configuration modal step 1 -->
+<div class="modal fade bg-black" id="loadConfigsModal1" tabindex="-1" role="dialog" aria-labelledby="loadConfigsModalLabel1" aria-hidden="true">
   <div class="modal-dialog bg-black" role="document">
     <div class="modal-content bg-black">
       <div class="modal-header bg-black">
-        <h5 class="modal-title bg-black" id="loadConfigsModalLabel">Load configuration</h5>
+        <h5 class="modal-title bg-black" id="loadConfigsModalLabel1">Where should we load the config from?</h5>
+      </div>
+      <div class="modal-body bg-black">        
+        <textarea id="configurationLoadTextArea" rows="5" class="w-full" placeholder="Paste JSON here"></textarea>
+      </div>
+      <div class="modal-footer bg-black">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-outline-primary" onclick={loadCostConfigurationFromText}>Load</button>
+        <button type="button" class="btn btn-outline-primary" onclick={loadCostConfigurationShowStep2}>Load from api</button>
+        <button id="loadFromFileButton" type="button" class="btn btn-outline-primary" onclick={showFileDialog}>
+          Load from file <input id="file" type="file" style="display: none;" onChange={loadCostConfigurationFromJSON} />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Load configuration modal step 2 -->
+<div class="modal fade bg-black" id="loadConfigsModal2" tabindex="-1" role="dialog" aria-labelledby="loadConfigsModalLabel2" aria-hidden="true">
+  <div class="modal-dialog bg-black" role="document">
+    <div class="modal-content bg-black">
+      <div class="modal-header bg-black">
+        <h5 class="modal-title bg-black" id="loadConfigsModalLabel2">Load configuration</h5>
       </div>
       <div class="modal-body bg-black">
-        <ul class="list-group bg-black">
+        <ul class="list-group bg-black" id="loadedConfigsListGroup">
             <li class="list-group-item bg-black" data-configid={id} each={ opts.viewModel.loadedConfigurations}>{name}</li>
         </ul>
       </div>
       <div class="modal-footer bg-black">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-outline-primary" onclick={loadCostConfiguration}>Load existing</button>
-        <button id="loadFromFileButton" type="button" class="btn btn-outline-primary" onclick={showFileDialog}>
-          Load from file <input id="file" type="file" style="display: none;" onChange={loadCostConfigurationFromJSON} />
-        </button>        
+        <button type="button" class="btn btn-outline-primary" onclick={loadCostConfiguration}>Load selected</button>
       </div>
     </div>
   </div>
@@ -92,11 +112,11 @@
         <h5 class="modal-title bg-black" id="saveConfigModalLabel">Save configuration</h5>
       </div> 
       <div class="modal-body bg-black">
-        <input id="inputNewConfigurationName" placeholder="Configuratiton name" class="w-full" />
+        <span id="costConfigJsonText">JSON goes here..</span>
       </div>
       <div class="modal-footer bg-black">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-outline-primary" onclick={saveCostConfiguration}>Save</button>
+        <button type="button" class="btn btn-outline-primary" onclick={saveCostConfiguration}>Download JSON</button>
       </div>
     </div>
   </div>
@@ -127,15 +147,38 @@
     }
 
     saveCostConfiguration(e) {
-      let newName = $('#inputNewConfigurationName').val();
-      if (!isEmptyOrSpaces(newName)) {
-        let jsonData = opts.viewModel.serializeCurrentSetup(newName);
-        download(jsonData,newName);
+        let jsonData = opts.viewModel.serializeCurrentSetup('configuration');
+        download(jsonData,'configuration');
         $('#saveConfigModal').modal('hide');
-        $('#inputNewConfigurationName').val('');
-      }
+        $('#costConfigJsonText').text('');
     }
     
+    loadCostConfigurationFromText(e) {
+      let jsonInput = $('#configurationLoadTextArea').val();
+      try {
+        let jsonInputObject = JSON.parse(jsonInput);
+        opts.viewModel.loadCostConfigurationResult(jsonInputObject);
+      } catch (error) {
+        alert('Failed to load input');
+      }
+      $('#configurationLoadTextArea').val('');
+      $('#loadConfigsModal1').modal('hide');
+    }
+
+    loadCostConfigurationShowStep2(e) {
+      $('#loadConfigsModal1').modal('hide');
+
+      jQuery.get('api/Configs', function(data, status) {
+      opts.viewModel.loadAllConfigurations(data);
+          $('#loadedConfigsListGroup').listgroup();
+          riot.update();
+      }).fail(function(data) {
+          alert('Failed to load configs from api: ' + data.statusText);
+      });
+
+      $('#loadConfigsModal2').modal('show');
+    }
+
     loadCostConfiguration(e) {
         
         // find first and only active (selected) item and get id
@@ -143,7 +186,7 @@
 
         if (selectedId) {
 
-            $('#loadConfigsModal').modal('hide');
+            $('#loadConfigsModal2').modal('hide');
 
             let apiPath = 'api/Configs/' + selectedId
             jQuery.get(apiPath, function(data, status) {
@@ -219,7 +262,7 @@
         console.log(event.target.result);
         var obj = JSON.parse(event.target.result);
         opts.viewModel.loadCostConfigurationResult(obj);
-        $('#loadConfigsModal').modal('hide');
+        $('#loadConfigsModal1').modal('hide');
       } catch (error) {
         alert ('Failed to read input :(')
       }
