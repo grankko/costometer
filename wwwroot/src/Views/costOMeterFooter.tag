@@ -59,7 +59,7 @@
         }
 
         showCurrencyModal(e) {
-            $('#setCurrencyModal').modal('show');
+            $('#currencyModal').modal('show');
         }
         
         loadAllCostConfigurations(e) {
@@ -70,7 +70,8 @@
             if (opts.viewModel.getIsSaveable()) {
                 let jsonData = opts.viewModel.serializeCurrentSetup('configuration');
                 $('#saveConfigModal').modal('show');
-                $('#costConfigJsonText').text(jsonData);                
+                $('#costConfigJsonText').text(jsonData);
+                selectText('costConfigJsonText');
             }
         }
 

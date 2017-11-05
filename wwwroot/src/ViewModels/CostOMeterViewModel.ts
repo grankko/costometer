@@ -1,6 +1,3 @@
-///<reference path="../ViewModels/Consultant.ts" />
-///<reference path="../Models/CostConfiguration.ts" />
-///<reference path="../Models/Consultant.ts" />
 namespace ViewModels {
     export class CostOMeterViewModel {
 

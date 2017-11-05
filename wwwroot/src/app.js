@@ -1,78 +1,5 @@
 var ViewModels;
 (function (ViewModels) {
-    var Consultant = (function () {
-        function Consultant(cost, name, id, timerInterval) {
-            this.name = name;
-            this.hourlyCost = cost;
-            this.id = id;
-            this.timerInterval = timerInterval;
-            this.isPausePending = false;
-            this.isRunning = false;
-            this.previousTimespanCosts = 0;
-            this.currentTimespanCost = 0;
-        }
-        Consultant.prototype.getTotalCostFormatted = function () {
-            return this.getTotalCost().toFixed(2);
-        };
-        Consultant.prototype.getTotalCost = function () {
-            return (this.previousTimespanCosts + this.currentTimespanCost);
-        };
-        Consultant.prototype.ticking = function () {
-            if (this.isPausePending === true) {
-                clearInterval(this.timer);
-                var currentTotalCost = (this.previousTimespanCosts + this.currentTimespanCost);
-                this.previousTimespanCosts = currentTotalCost;
-                this.currentTimespanCost = 0;
-                this.isPausePending = false;
-                this.isRunning = false;
-            }
-            else {
-                var elapsed = (new Date().getTime() - this.lastStarted);
-                var elapsedHours = (elapsed / 1000) / 3600;
-                this.currentTimespanCost = elapsedHours * this.hourlyCost;
-            }
-            this.onTick();
-        };
-        Consultant.prototype.start = function () {
-            var _this = this;
-            console.log('Starting calculator for ' + this.id);
-            this.isRunning = true;
-            this.currentTimespanCost = 0;
-            this.lastStarted = new Date().getTime();
-            this.timer = setInterval(function () {
-                _this.ticking();
-            }, this.timerInterval);
-        };
-        Consultant.prototype.pause = function () {
-            console.log('Pausing calculator for ' + this.id);
-            console.log('Previous cost is for ' + this.id + ' is: ' + this.previousTimespanCosts.toFixed(2));
-            this.isPausePending = true;
-        };
-        return Consultant;
-    }());
-    ViewModels.Consultant = Consultant;
-})(ViewModels || (ViewModels = {}));
-var Models;
-(function (Models) {
-    var Consultant = (function () {
-        function Consultant() {
-        }
-        return Consultant;
-    }());
-    Models.Consultant = Consultant;
-})(Models || (Models = {}));
-var Models;
-(function (Models) {
-    var CostConfiguration = (function () {
-        function CostConfiguration() {
-            this.consultants = [];
-        }
-        return CostConfiguration;
-    }());
-    Models.CostConfiguration = CostConfiguration;
-})(Models || (Models = {}));
-var ViewModels;
-(function (ViewModels) {
     var CostOMeterViewModel = (function () {
         function CostOMeterViewModel(newTimerInterval) {
             this.consultants = [];
@@ -197,4 +124,107 @@ var ViewModels;
 })(ViewModels || (ViewModels = {}));
 console.log('Hi there');
 var vm = new ViewModels.CostOMeterViewModel(100);
+function isEmptyOrSpaces(str) {
+    return str === null || str.match(/^ *$/) !== null;
+}
+function selectText(element) {
+    var doc = document, text = doc.getElementById(element), range, selection;
+    if (doc.body.createTextRange) {
+        range = document.body.createTextRange();
+        range.moveToElementText(text);
+        range.select();
+    }
+    else if (window.getSelection) {
+        selection = window.getSelection();
+        range = document.createRange();
+        range.selectNodeContents(text);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+}
+function supportFormData() {
+    if (window.File && window.FileReader && window.FileList && window.Blob)
+        return true;
+    return false;
+}
+function download(text, name) {
+    var a = document.createElement("a");
+    var file = new Blob([text], { type: 'application/json' });
+    a.href = URL.createObjectURL(file);
+    a.download = name + '.json';
+    a.click();
+}
+var Models;
+(function (Models) {
+    var Consultant = (function () {
+        function Consultant() {
+        }
+        return Consultant;
+    }());
+    Models.Consultant = Consultant;
+})(Models || (Models = {}));
+var Models;
+(function (Models) {
+    var CostConfiguration = (function () {
+        function CostConfiguration() {
+            this.consultants = [];
+        }
+        return CostConfiguration;
+    }());
+    Models.CostConfiguration = CostConfiguration;
+})(Models || (Models = {}));
+var ViewModels;
+(function (ViewModels) {
+    var Consultant = (function () {
+        function Consultant(cost, name, id, timerInterval) {
+            this.name = name;
+            this.hourlyCost = cost;
+            this.id = id;
+            this.timerInterval = timerInterval;
+            this.isPausePending = false;
+            this.isRunning = false;
+            this.previousTimespanCosts = 0;
+            this.currentTimespanCost = 0;
+        }
+        Consultant.prototype.getTotalCostFormatted = function () {
+            return this.getTotalCost().toFixed(2);
+        };
+        Consultant.prototype.getTotalCost = function () {
+            return (this.previousTimespanCosts + this.currentTimespanCost);
+        };
+        Consultant.prototype.ticking = function () {
+            if (this.isPausePending === true) {
+                clearInterval(this.timer);
+                var currentTotalCost = (this.previousTimespanCosts + this.currentTimespanCost);
+                this.previousTimespanCosts = currentTotalCost;
+                this.currentTimespanCost = 0;
+                this.isPausePending = false;
+                this.isRunning = false;
+            }
+            else {
+                var elapsed = (new Date().getTime() - this.lastStarted);
+                var elapsedHours = (elapsed / 1000) / 3600;
+                this.currentTimespanCost = elapsedHours * this.hourlyCost;
+            }
+            this.onTick();
+        };
+        Consultant.prototype.start = function () {
+            var _this = this;
+            console.log('Starting calculator for ' + this.id);
+            this.isRunning = true;
+            this.currentTimespanCost = 0;
+            this.lastStarted = new Date().getTime();
+            this.timer = setInterval(function () {
+                _this.ticking();
+            }, this.timerInterval);
+        };
+        Consultant.prototype.pause = function () {
+            console.log('Pausing calculator for ' + this.id);
+            console.log('Previous cost is for ' + this.id + ' is: ' + this.previousTimespanCosts.toFixed(2));
+            this.isPausePending = true;
+        };
+        return Consultant;
+    }());
+    ViewModels.Consultant = Consultant;
+})(ViewModels || (ViewModels = {}));
 //# sourceMappingURL=app.js.map
