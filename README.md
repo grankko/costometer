@@ -24,7 +24,7 @@ Live at: https://granaker.se/costometer
 - TypeScript Modules
 - Break up ViewModel and introduce client services
 - UnitTest (api and client)
-- Break up RiotJS tags. Seperate modal dialogs.
+- ~~Break up RiotJS tags. Seperate modal dialogs.~~
 
 ### Notes
 - Publish.bat builds and replaces web.config with web.production.config. Ignore it.
