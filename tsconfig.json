@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "out": "wwwroot/src/app.js",
         "watch": false,
         "module": "commonjs",
         "sourceMap": true,

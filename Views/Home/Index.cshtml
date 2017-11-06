@@ -19,15 +19,6 @@
     <link rel="stylesheet" href="css/style.css?@(DateTime.Now.ToString())">
   </head>
   <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.20.19/system.js" integrity="sha256-HCJlhCZ21EKx0Wo6wCF+rbeBHlVlOSJccd4zTQe2TNw=" crossorigin="anonymous"></script>
-    <script>
-<!-- 
-      // loads './app.js' from the current directory
-      SystemJS.import('./src/app.js').then(function (m) {
-        console.log(m);
-        main.execute();
-      }); -->
-    </script>    
   <header>
     <div class="center-content">
       <img src="img/logo-glow.png" alt="logo" class="logo-img" />
@@ -39,23 +30,19 @@
   <footer>
     <costOMeterFooter></costOMeterFooter>
   </footer>
-    <script src="src/Views/costOMeterBody.tag" type="riot/tag"></script>
-    <script src="src/Views/costOMeterFooter.tag" type="riot/tag"></script>
-    <script src="src/Views/Modals/addResourceModal.tag" type="riot/tag"></script>
-    <script src="src/Views/Modals/resetConfigurationModal.tag" type="riot/tag"></script>
-    <script src="src/Views/Modals/loadConfigurationModal.tag" type="riot/tag"></script>
-    <script src="src/Views/Modals/saveConfigurationModal.tag" type="riot/tag"></script>
-    <script src="src/Views/Modals/setCurrencyModal.tag" type="riot/tag"></script>
+    <script src="out/tags/costOMeterBody.tag" type="riot/tag"></script>
+    <script src="out/tags/costOMeterFooter.tag" type="riot/tag"></script>
+    <script src="out/tags/modals/addResourceModal.tag" type="riot/tag"></script>
+    <script src="out/tags/modals/resetConfigurationModal.tag" type="riot/tag"></script>
+    <script src="out/tags/modals/loadConfigurationModal.tag" type="riot/tag"></script>
+    <script src="out/tags/modals/saveConfigurationModal.tag" type="riot/tag"></script>
+    <script src="out/tags/modals/setCurrencyModal.tag" type="riot/tag"></script>
         
     <script src="https://rawgit.com/riot/riot/master/riot%2Bcompiler.min.js"></script>
-    <script>
-        riot.mount('costOMeterBody', {viewModel: vm})
-        riot.mount('costOMeterFooter', {viewModel: vm})
-    </script>
-
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/bootstrap.listgroup/1.1.2/listgroup.min.js"></script>
+    <script src="out/main.build.js"></script>
 </body>
 </html>

@@ -41,7 +41,7 @@
     this.on('mount', function () {
         console.log('costOMeterBody mounted');
 
-        if (!supportFormData()) {
+        if (!opts.utils.supportFormData()) {
           $('#saveLinkButton').hide();
           $('#saveLinkButtonImage').hide();
           $('#loadFromFileButton').hide();

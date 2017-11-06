@@ -24,7 +24,7 @@
       let name = $('#inputName').val();
       let cost = $('#inputCost').val();
 
-      if (!isEmptyOrSpaces(name) && !isEmptyOrSpaces(cost)) {
+      if (!this.parent.opts.utils.isEmptyOrSpaces(name) && !this.parent.opts.utils.isEmptyOrSpaces(cost)) {
         let consultant = this.parent.opts.viewModel.addConsultant(name, cost)
 
         if (this.parent.opts.viewModel.getIsRunning()) {

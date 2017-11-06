@@ -18,7 +18,7 @@
 <script>
     saveCostConfiguration(e) {
         let jsonData = this.parent.opts.viewModel.serializeCurrentSetup('configuration');
-        download(jsonData,'configuration');
+        this.parent.opts.utils.download(jsonData,'configuration');
         $('#saveConfigModal').modal('hide');
         $('#costConfigJsonText').text('');
     }

@@ -14,6 +14,7 @@ Live at: https://granaker.se/costometer
 - Bootstrap
 - jQuery
 - listgroupjs (http://rickardn.github.io/listgroup.js/)
+- Webpack
 
 ### Todo
 - ~~Build support for setting currency (defaults to )kr~~ DONE
@@ -21,7 +22,7 @@ Live at: https://granaker.se/costometer
 - Feature complete. Refactor.
 
 ### Refactor
-- TypeScript Modules
+- ~~TypeScript Modules~~ introduced Webpack
 - Break up ViewModel and introduce client services
 - UnitTest (api and client)
 - ~~Break up RiotJS tags. Seperate modal dialogs.~~

@@ -71,7 +71,7 @@
                 let jsonData = opts.viewModel.serializeCurrentSetup('configuration');
                 $('#saveConfigModal').modal('show');
                 $('#costConfigJsonText').text(jsonData);
-                selectText('costConfigJsonText');
+                opts.utils.selectText('costConfigJsonText');
             }
         }
 
