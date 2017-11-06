@@ -1,7 +1,9 @@
-namespace ViewModels {
+import * as ViewModels from './viewModels'
+import * as Models from '../Models/Models'
+
     export class CostOMeterViewModel {
 
-        public consultants: ViewModels.Consultant[] = [];
+        public consultants: ViewModels.ConsultantViewModel[] = [];
         public loadedConfigurations: Models.CostConfiguration[] = [];
         public onTick;
         public currency: string;
@@ -88,12 +90,12 @@ namespace ViewModels {
             }
         }
 
-        public addConsultant(name: string, cost: number): ViewModels.Consultant {
+        public addConsultant(name: string, cost: number): ViewModels.ConsultantViewModel {
 
             console.log('Adding consultant.');
 
             this.lastId = this.lastId + 1;
-            let newConsultant = new ViewModels.Consultant(cost, name, this.lastId, this.timerInterval);
+            let newConsultant = new ViewModels.ConsultantViewModel(cost, name, this.lastId, this.timerInterval);
             newConsultant.onTick = this.onTick; // wires up function for updating on Consultant timer ticks.
 
             this.consultants.push(newConsultant);
@@ -101,7 +103,7 @@ namespace ViewModels {
             return newConsultant;
         }
 
-        public removeConsultant(item: ViewModels.Consultant) {
+        public removeConsultant(item: ViewModels.ConsultantViewModel) {
             console.log('Removing consultant with id ' + item.id);
             let itemCost = item.getTotalCost();
 
@@ -159,4 +161,4 @@ namespace ViewModels {
             this.deletedConsultantCosts = 0;
         }
     }
-}
+

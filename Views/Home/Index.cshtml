@@ -19,6 +19,15 @@
     <link rel="stylesheet" href="css/style.css?@(DateTime.Now.ToString())">
   </head>
   <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.20.19/system.js" integrity="sha256-HCJlhCZ21EKx0Wo6wCF+rbeBHlVlOSJccd4zTQe2TNw=" crossorigin="anonymous"></script>
+    <script>
+<!-- 
+      // loads './app.js' from the current directory
+      SystemJS.import('./src/app.js').then(function (m) {
+        console.log(m);
+        main.execute();
+      }); -->
+    </script>    
   <header>
     <div class="center-content">
       <img src="img/logo-glow.png" alt="logo" class="logo-img" />
@@ -39,7 +48,6 @@
     <script src="src/Views/Modals/setCurrencyModal.tag" type="riot/tag"></script>
         
     <script src="https://rawgit.com/riot/riot/master/riot%2Bcompiler.min.js"></script>
-    <script src="src/app.js?@(DateTime.Now.ToString())"></script>
     <script>
         riot.mount('costOMeterBody', {viewModel: vm})
         riot.mount('costOMeterFooter', {viewModel: vm})

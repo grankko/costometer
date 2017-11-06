@@ -1,5 +1,5 @@
-namespace ViewModels {
-    export class Consultant {
+
+    export class ConsultantViewModel {
 
         public name: string;
         public id: number;
@@ -80,4 +80,3 @@ namespace ViewModels {
         }
 
     }
-}
