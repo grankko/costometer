@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Web.Costometer.Models
+namespace CostOMeter.Web.Models
 {
     public class CostConfiguration
     {

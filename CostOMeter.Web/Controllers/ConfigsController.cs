@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Web.Costometer.Models;
+using CostOMeter.Web.Models;
 
-namespace Web.Costometer.Controllers
+namespace CostOMeter.Web.Controllers
 {
 
     [Route("api/[controller]")]
@@ -21,7 +21,7 @@ namespace Web.Costometer.Controllers
         [HttpGet("{id}")]
         public CostConfiguration GetById(long id)
         {
-            return BuildTestSet().First(cc => cc.Id == id);
+            return BuildTestSet().FirstOrDefault(cc => cc.Id == id);
         }
 
         private List<CostConfiguration> BuildTestSet()

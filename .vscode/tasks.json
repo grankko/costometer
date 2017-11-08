@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}/CostOMeter.web/CostOMeter.web.csproj"
+                "${workspaceRoot}/CostOMeter.sln"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
@@ -26,6 +26,14 @@
             // use the standard tsc problem matcher to find compile problems
             // in the output.
             "problemMatcher": "$tsc"
+        }
+        ,
+        {
+            "taskName": "test",
+            "args": [ ],
+            "isTestCommand": true,
+            "showOutput": "always",
+            "problemMatcher": "$msCompile"
         }
     ]
 }

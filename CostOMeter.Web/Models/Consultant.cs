@@ -1,4 +1,4 @@
-namespace Web.Costometer.Models
+namespace CostOMeter.Web.Models
 {
     public class Consultant
     {

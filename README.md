@@ -29,4 +29,3 @@ Live at: https://granaker.se/costometer
 
 ### Notes
 - Publish.bat builds and replaces web.config with web.production.config. Ignore it.
-- Visual Studio Code tasks.json defines buildTs that transpiles TypeScript to app.js.
