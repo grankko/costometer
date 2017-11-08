@@ -7,4 +7,4 @@ var CostConfiguration = (function () {
     return CostConfiguration;
 }());
 exports.CostConfiguration = CostConfiguration;
-//# sourceMappingURL=costConfiguration.js.map
+//# sourceMappingURL=CostConfiguration.js.map

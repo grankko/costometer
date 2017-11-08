@@ -123,4 +123,4 @@ var CostOMeterViewModel = (function () {
     return CostOMeterViewModel;
 }());
 exports.CostOMeterViewModel = CostOMeterViewModel;
-//# sourceMappingURL=costOMeterViewModel.js.map
+//# sourceMappingURL=CostOMeterViewModel.js.map

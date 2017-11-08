@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}/web.costometer.csproj"
+                "${workspaceRoot}/CostOMeter.web/CostOMeter.web.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
@@ -22,7 +22,7 @@
             // Show the output window only if unrecognized errors occur. 
             "showOutput": "always",        
             // Tell the tsc compiler to use the tsconfig.json from the open folder.
-            "args": [],        
+            "args": ["-p", "CostOMeter.Web/tsconfig.json"],
             // use the standard tsc problem matcher to find compile problems
             // in the output.
             "problemMatcher": "$tsc"

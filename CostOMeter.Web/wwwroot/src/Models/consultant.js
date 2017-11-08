@@ -6,4 +6,4 @@ var Consultant = (function () {
     return Consultant;
 }());
 exports.Consultant = Consultant;
-//# sourceMappingURL=consultant.js.map
+//# sourceMappingURL=Consultant.js.map

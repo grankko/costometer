@@ -280,7 +280,7 @@ var CostOMeterViewModel = (function () {
     return CostOMeterViewModel;
 }());
 exports.CostOMeterViewModel = CostOMeterViewModel;
-//# sourceMappingURL=costOMeterViewModel.js.map
+//# sourceMappingURL=CostOMeterViewModel.js.map
 
 /***/ }),
 /* 4 */
@@ -308,7 +308,7 @@ var Consultant = (function () {
     return Consultant;
 }());
 exports.Consultant = Consultant;
-//# sourceMappingURL=consultant.js.map
+//# sourceMappingURL=Consultant.js.map
 
 /***/ }),
 /* 6 */
@@ -324,7 +324,7 @@ var CostConfiguration = (function () {
     return CostConfiguration;
 }());
 exports.CostConfiguration = CostConfiguration;
-//# sourceMappingURL=costConfiguration.js.map
+//# sourceMappingURL=CostConfiguration.js.map
 
 /***/ }),
 /* 7 */

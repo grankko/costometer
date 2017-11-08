@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore;
 
-namespace web.costometer
+namespace CostOMeter.Web
 {
     public class Program
     {

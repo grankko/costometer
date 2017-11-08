@@ -1,9 +1,0 @@
-{
-    "compilerOptions": {
-        "target": "es5",
-        "watch": false,
-        "module": "commonjs",
-        "sourceMap": true,
-        "removeComments": true
-    }
-}
