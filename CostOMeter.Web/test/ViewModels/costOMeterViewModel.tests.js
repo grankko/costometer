@@ -71,5 +71,40 @@ describe("CostOMeterViewModel", function () {
             chai.assert.equal(actual, 0, 'Number of consultants not expected');
         });
     });
+    describe("CostOMeterViewModel with consultants", function () {
+        beforeEach(function () {
+            _sut = new viewModels_1.CostOMeterViewModel(100, new ConsultantTimerMock_1.TimerMockFactory());
+            _sut.addConsultant('test dude 1', 1000);
+            _sut.addConsultant('test dude 2', 900);
+        });
+        it("should be running when started", function () {
+            _sut.startCalculator();
+            var actual = _sut.getIsRunning();
+            chai.assert.equal(actual, true, 'Did not start running when started');
+        });
+        it("should stop when running and the paused", function () {
+            _sut.startCalculator();
+            var actual = _sut.getIsRunning();
+            chai.assert.equal(actual, true, 'Did not start running when started');
+            _sut.stopCalculator();
+            for (var _i = 0, _a = _sut.consultants; _i < _a.length; _i++) {
+                var cons = _a[_i];
+                cons.onTick = function () { };
+                cons.ticking(1);
+            }
+            actual = _sut.getIsRunning();
+            chai.assert.equal(actual, false, 'Did not stop running when paused');
+        });
+        it("should calculate total cost correct after one hour", function () {
+            _sut.startCalculator();
+            for (var _i = 0, _a = _sut.consultants; _i < _a.length; _i++) {
+                var cons = _a[_i];
+                cons.onTick = function () { };
+                cons.ticking(1);
+            }
+            var actual = _sut.getTotalCost();
+            chai.assert.equal(actual, '1900.00', 'Did not stop running when paused');
+        });
+    });
 });
 //# sourceMappingURL=costOMeterViewModel.tests.js.map

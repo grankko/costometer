@@ -85,4 +85,47 @@ describe("CostOMeterViewModel", () => {
         });
 
     });
+
+    describe("CostOMeterViewModel with consultants", () => {
+        beforeEach(function () {
+            _sut = new CostOMeterViewModel(100, new TimerMockFactory());
+            _sut.addConsultant('test dude 1', 1000);
+            _sut.addConsultant('test dude 2', 900);
+        });
+
+        it("should be running when started", () => {
+            _sut.startCalculator();
+            let actual = _sut.getIsRunning();
+            chai.assert.equal(actual, true, 'Did not start running when started');
+        });
+
+        it("should stop when running and the paused", () => {
+            _sut.startCalculator();
+            let actual = _sut.getIsRunning();
+            chai.assert.equal(actual, true, 'Did not start running when started');
+            
+            _sut.stopCalculator();
+
+            // simulate a tick
+            for (let cons of _sut.consultants) {
+                cons.onTick = () => {};
+                cons.ticking(1);
+            }
+
+            actual = _sut.getIsRunning();
+            chai.assert.equal(actual, false, 'Did not stop running when paused');
+        });
+
+        it("should calculate total cost correct after one hour", () => {
+            _sut.startCalculator();
+            // simulate a tick
+            for (let cons of _sut.consultants) {
+                cons.onTick = () => {};
+                cons.ticking(1);
+            }
+
+            let actual = _sut.getTotalCost();
+            chai.assert.equal(actual, '1900.00', 'Did not stop running when paused');
+        });
+    });
 });
