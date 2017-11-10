@@ -4,6 +4,7 @@
 
 import {CostOMeterViewModel}  from "../../wwwroot/src/ViewModels/viewModels"
 import chai = require('chai');
+import {TimerMockFactory}  from "../Mocks/ConsultantTimerMock"
 
 describe("CostOMeterViewModel", () => {
 
@@ -11,7 +12,7 @@ describe("CostOMeterViewModel", () => {
 
     describe("new CostOMeterViewModel", () => {
         beforeEach(function () {
-            _sut = new CostOMeterViewModel(100);
+            _sut = new CostOMeterViewModel(100, new TimerMockFactory());
         });
 
         it("should not be runnable", () => {
@@ -34,7 +35,7 @@ describe("CostOMeterViewModel", () => {
 
     describe("CostOMeterViewModel with consultants", () => {
         beforeEach(function () {
-            _sut = new CostOMeterViewModel(100);
+            _sut = new CostOMeterViewModel(100, new TimerMockFactory());
             _sut.addConsultant('test dude 1', 1000);
             _sut.addConsultant('test dude 2', 900);
         });
@@ -59,7 +60,7 @@ describe("CostOMeterViewModel", () => {
 
     describe("CostOMeterViewModel with consultants", () => {
         beforeEach(function () {
-            _sut = new CostOMeterViewModel(100);
+            _sut = new CostOMeterViewModel(100, new TimerMockFactory());
             _sut.addConsultant('test dude 1', 1000);
             _sut.addConsultant('test dude 2', 900);
         });

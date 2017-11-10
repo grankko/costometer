@@ -2,11 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var viewModels_1 = require("../../wwwroot/src/ViewModels/viewModels");
 var chai = require("chai");
+var ConsultantTimerMock_1 = require("../Mocks/ConsultantTimerMock");
 describe("CostOMeterViewModel", function () {
     var _sut;
     describe("new CostOMeterViewModel", function () {
         beforeEach(function () {
-            _sut = new viewModels_1.CostOMeterViewModel(100);
+            _sut = new viewModels_1.CostOMeterViewModel(100, new ConsultantTimerMock_1.TimerMockFactory());
         });
         it("should not be runnable", function () {
             var actual = _sut.getIsRunnable();
@@ -27,7 +28,7 @@ describe("CostOMeterViewModel", function () {
     });
     describe("CostOMeterViewModel with consultants", function () {
         beforeEach(function () {
-            _sut = new viewModels_1.CostOMeterViewModel(100);
+            _sut = new viewModels_1.CostOMeterViewModel(100, new ConsultantTimerMock_1.TimerMockFactory());
             _sut.addConsultant('test dude 1', 1000);
             _sut.addConsultant('test dude 2', 900);
         });
@@ -50,7 +51,7 @@ describe("CostOMeterViewModel", function () {
     });
     describe("CostOMeterViewModel with consultants", function () {
         beforeEach(function () {
-            _sut = new viewModels_1.CostOMeterViewModel(100);
+            _sut = new viewModels_1.CostOMeterViewModel(100, new ConsultantTimerMock_1.TimerMockFactory());
             _sut.addConsultant('test dude 1', 1000);
             _sut.addConsultant('test dude 2', 900);
         });

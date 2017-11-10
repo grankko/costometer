@@ -3,13 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ViewModels = require("./viewModels");
 var Models = require("../Models/Models");
 var CostOMeterViewModel = (function () {
-    function CostOMeterViewModel(newTimerInterval) {
+    function CostOMeterViewModel(newTimerInterval, timerFactory) {
         this.consultants = [];
         this.loadedConfigurations = [];
         this.timerInterval = newTimerInterval;
         this.lastId = 0;
         this.deletedConsultantCosts = 0;
         this.currency = 'SEK';
+        this.timerFactory = timerFactory;
     }
     CostOMeterViewModel.prototype.getTotalHourlyCost = function () {
         var totalHourlySummed = 0;
@@ -55,32 +56,28 @@ var CostOMeterViewModel = (function () {
         return isRunning;
     };
     CostOMeterViewModel.prototype.startCalculator = function () {
-        console.log('Starting calculator.');
         for (var _i = 0, _a = this.consultants; _i < _a.length; _i++) {
             var cons = _a[_i];
             cons.start();
         }
     };
     CostOMeterViewModel.prototype.stopCalculator = function () {
-        console.log('Stopping calculator.');
         for (var _i = 0, _a = this.consultants; _i < _a.length; _i++) {
             var cons = _a[_i];
             cons.pause();
         }
     };
     CostOMeterViewModel.prototype.addConsultant = function (name, cost) {
-        console.log('Adding consultant.');
         this.lastId = this.lastId + 1;
-        var newConsultant = new ViewModels.ConsultantViewModel(cost, name, this.lastId, this.timerInterval);
+        var newConsultantTimer = this.timerFactory.createTimer(this.timerInterval);
+        var newConsultant = new ViewModels.ConsultantViewModel(newConsultantTimer, cost, name, this.lastId);
         newConsultant.onTick = this.onTick;
         this.consultants.push(newConsultant);
         return newConsultant;
     };
     CostOMeterViewModel.prototype.removeConsultant = function (item) {
-        console.log('Removing consultant with id ' + item.id);
         var itemCost = item.getTotalCost();
         var index = this.consultants.indexOf(item);
-        console.log('Index of this one is: ' + index);
         this.consultants.splice(index, 1);
         this.deletedConsultantCosts = Number(this.deletedConsultantCosts) + Number(itemCost);
     };

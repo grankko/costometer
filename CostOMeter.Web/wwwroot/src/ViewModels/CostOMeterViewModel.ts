@@ -1,5 +1,6 @@
 import * as ViewModels from './viewModels'
 import * as Models from '../Models/Models'
+import * as Services from '../Services/services'
 
     export class CostOMeterViewModel {
 
@@ -13,12 +14,15 @@ import * as Models from '../Models/Models'
         private lastId: number;
         /** Cost of previously active and now deleted Consultants */
         private deletedConsultantCosts: number;
+        private timerFactory : Services.IConsultantTimerFactory;
 
-        constructor(newTimerInterval: number) {
+        constructor(newTimerInterval: number, timerFactory :Services.IConsultantTimerFactory) {
             this.timerInterval = newTimerInterval;
             this.lastId = 0;
             this.deletedConsultantCosts = 0;
-            this.currency = 'SEK'
+            this.currency = 'SEK';
+            this.timerFactory = timerFactory;
+            
         }
 
         public getTotalHourlyCost(): string {
@@ -75,27 +79,22 @@ import * as Models from '../Models/Models'
         }
 
         public startCalculator() {
-            console.log('Starting calculator.');
-
             for (let cons of this.consultants) {
                 cons.start();
             }
         }
 
         public stopCalculator() {
-            console.log('Stopping calculator.');
-
             for (let cons of this.consultants) {
                 cons.pause();
             }
         }
 
         public addConsultant(name: string, cost: number): ViewModels.ConsultantViewModel {
-
-            console.log('Adding consultant.');
-
             this.lastId = this.lastId + 1;
-            let newConsultant = new ViewModels.ConsultantViewModel(cost, name, this.lastId, this.timerInterval);
+            let newConsultantTimer = this.timerFactory.createTimer(this.timerInterval);
+            //let newConsultant = new ViewModels.ConsultantViewModel(cost, name, this.lastId, this.timerInterval);
+            let newConsultant = new ViewModels.ConsultantViewModel(newConsultantTimer, cost, name, this.lastId);
             newConsultant.onTick = this.onTick; // wires up function for updating on Consultant timer ticks.
 
             this.consultants.push(newConsultant);
@@ -104,11 +103,9 @@ import * as Models from '../Models/Models'
         }
 
         public removeConsultant(item: ViewModels.ConsultantViewModel) {
-            console.log('Removing consultant with id ' + item.id);
             let itemCost = item.getTotalCost();
 
             let index = this.consultants.indexOf(item);
-            console.log('Index of this one is: ' + index);
 
             this.consultants.splice(index, 1);
 
@@ -130,7 +127,6 @@ import * as Models from '../Models/Models'
 
             this.resetViewModel();
 
-            // todo: parse as typed result..
             for (let i = 0; i < data.consultants.length; i++) {
 
                 this.addConsultant(data.consultants[i].name, Number(data.consultants[i].hourlyCost));
