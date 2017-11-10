@@ -6,7 +6,7 @@ import * as Services from "../Services/services";
         public id: number;
         public hourlyCost: number;
         public isRunning: boolean;
-        public onTick;
+        public onTimerTicking;
 
         /** Costs from previoius timespans stored when calculation has been paused. */
         private previousTimespanCosts: number;
@@ -17,6 +17,7 @@ import * as Services from "../Services/services";
 
         constructor(timer: Services.IConsultantTimer, cost: number, name: string, id: number) {
             this.timer = timer;
+            var self = this;
             this.timer.onTick = this.ticking;
             
             this.name = name;
@@ -38,23 +39,23 @@ import * as Services from "../Services/services";
         }
 
         /** Runs calculation and stores sums in state every tick of the timer */
-        public ticking(elapsedHours :number) {
+        public ticking(elapsedHours :number, instance: ConsultantViewModel) {
 
-            if (this.isPausePending === true) {
+            if (instance.isPausePending === true) {
                 // Pause has been signaled. Set current costs to previous and reset current
-                this.timer.stop();
-                let currentTotalCost = (this.previousTimespanCosts + this.currentTimespanCost)
-                this.previousTimespanCosts = currentTotalCost;
-                this.currentTimespanCost = 0;
-                this.isPausePending = false;
-                this.isRunning = false;
+                instance.timer.stop();
+                let currentTotalCost = (instance.previousTimespanCosts + instance.currentTimespanCost)
+                instance.previousTimespanCosts = currentTotalCost;
+                instance.currentTimespanCost = 0;
+                instance.isPausePending = false;
+                instance.isRunning = false;
             } else {
                 // Normal case, calculate elapsed hours and set current cost 
-                this.currentTimespanCost = elapsedHours * this.hourlyCost;
+                instance.currentTimespanCost = elapsedHours * instance.hourlyCost;
             }
 
             // Fire hook for others to update
-            this.onTick();
+            instance.onTimerTicking();
         }
 
         public start() {

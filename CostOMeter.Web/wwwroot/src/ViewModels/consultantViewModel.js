@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ConsultantViewModel = (function () {
     function ConsultantViewModel(timer, cost, name, id) {
         this.timer = timer;
+        var self = this;
         this.timer.onTick = this.ticking;
         this.name = name;
         this.hourlyCost = cost;
@@ -18,19 +19,19 @@ var ConsultantViewModel = (function () {
     ConsultantViewModel.prototype.getTotalCost = function () {
         return (this.previousTimespanCosts + this.currentTimespanCost);
     };
-    ConsultantViewModel.prototype.ticking = function (elapsedHours) {
-        if (this.isPausePending === true) {
-            this.timer.stop();
-            var currentTotalCost = (this.previousTimespanCosts + this.currentTimespanCost);
-            this.previousTimespanCosts = currentTotalCost;
-            this.currentTimespanCost = 0;
-            this.isPausePending = false;
-            this.isRunning = false;
+    ConsultantViewModel.prototype.ticking = function (elapsedHours, instance) {
+        if (instance.isPausePending === true) {
+            instance.timer.stop();
+            var currentTotalCost = (instance.previousTimespanCosts + instance.currentTimespanCost);
+            instance.previousTimespanCosts = currentTotalCost;
+            instance.currentTimespanCost = 0;
+            instance.isPausePending = false;
+            instance.isRunning = false;
         }
         else {
-            this.currentTimespanCost = elapsedHours * this.hourlyCost;
+            instance.currentTimespanCost = elapsedHours * instance.hourlyCost;
         }
-        this.onTick();
+        instance.onTimerTicking();
     };
     ConsultantViewModel.prototype.start = function () {
         this.isRunning = true;

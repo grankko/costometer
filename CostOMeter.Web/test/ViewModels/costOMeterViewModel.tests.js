@@ -89,8 +89,8 @@ describe("CostOMeterViewModel", function () {
             _sut.stopCalculator();
             for (var _i = 0, _a = _sut.consultants; _i < _a.length; _i++) {
                 var cons = _a[_i];
-                cons.onTick = function () { };
-                cons.ticking(1);
+                cons.onTimerTicking = function () { };
+                cons.ticking(1, cons);
             }
             actual = _sut.getIsRunning();
             chai.assert.equal(actual, false, 'Did not stop running when paused');
@@ -99,8 +99,8 @@ describe("CostOMeterViewModel", function () {
             _sut.startCalculator();
             for (var _i = 0, _a = _sut.consultants; _i < _a.length; _i++) {
                 var cons = _a[_i];
-                cons.onTick = function () { };
-                cons.ticking(1);
+                cons.onTimerTicking = function () { };
+                cons.ticking(1, cons);
             }
             var actual = _sut.getTotalCost();
             chai.assert.equal(actual, '1900.00', 'Did not stop running when paused');

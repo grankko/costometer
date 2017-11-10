@@ -80,10 +80,15 @@ exports.CostOMeterViewModel = CostOMeterViewModel_1.CostOMeterViewModel;
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var services_1 = __webpack_require__(8);
 var viewModules = __webpack_require__(0);
+var services = __webpack_require__(8);
 var utils = __webpack_require__(7);
 (function makeIt() {
-    var vm = new viewModules.CostOMeterViewModel(100);
+    var vm = new viewModules.CostOMeterViewModel(100, new services_1.ConsultantTimerFactory());
     var u = new utils.utilities();
     riot.mount('costOMeterBody', { viewModel: vm, utils: u });
     riot.mount('costOMeterFooter', { viewModel: vm, utils: u });
@@ -98,11 +103,13 @@ var utils = __webpack_require__(7);
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var ConsultantViewModel = (function () {
-    function ConsultantViewModel(cost, name, id, timerInterval) {
+    function ConsultantViewModel(timer, cost, name, id) {
+        this.timer = timer;
+        var self = this;
+        this.timer.onTick = this.ticking;
         this.name = name;
         this.hourlyCost = cost;
         this.id = id;
-        this.timerInterval = timerInterval;
         this.isPausePending = false;
         this.isRunning = false;
         this.previousTimespanCosts = 0;
@@ -114,41 +121,32 @@ var ConsultantViewModel = (function () {
     ConsultantViewModel.prototype.getTotalCost = function () {
         return (this.previousTimespanCosts + this.currentTimespanCost);
     };
-    ConsultantViewModel.prototype.ticking = function () {
-        if (this.isPausePending === true) {
-            clearInterval(this.timer);
-            var currentTotalCost = (this.previousTimespanCosts + this.currentTimespanCost);
-            this.previousTimespanCosts = currentTotalCost;
-            this.currentTimespanCost = 0;
-            this.isPausePending = false;
-            this.isRunning = false;
+    ConsultantViewModel.prototype.ticking = function (elapsedHours, instance) {
+        if (instance.isPausePending === true) {
+            instance.timer.stop();
+            var currentTotalCost = (instance.previousTimespanCosts + instance.currentTimespanCost);
+            instance.previousTimespanCosts = currentTotalCost;
+            instance.currentTimespanCost = 0;
+            instance.isPausePending = false;
+            instance.isRunning = false;
         }
         else {
-            var elapsed = (new Date().getTime() - this.lastStarted);
-            var elapsedHours = (elapsed / 1000) / 3600;
-            this.currentTimespanCost = elapsedHours * this.hourlyCost;
+            instance.currentTimespanCost = elapsedHours * instance.hourlyCost;
         }
-        this.onTick();
+        instance.onTimerTicking();
     };
     ConsultantViewModel.prototype.start = function () {
-        var _this = this;
-        console.log('Starting calculator for ' + this.id);
         this.isRunning = true;
         this.currentTimespanCost = 0;
-        this.lastStarted = new Date().getTime();
-        this.timer = setInterval(function () {
-            _this.ticking();
-        }, this.timerInterval);
+        this.timer.start();
     };
     ConsultantViewModel.prototype.pause = function () {
-        console.log('Pausing calculator for ' + this.id);
-        console.log('Previous cost is for ' + this.id + ' is: ' + this.previousTimespanCosts.toFixed(2));
         this.isPausePending = true;
     };
     return ConsultantViewModel;
 }());
 exports.ConsultantViewModel = ConsultantViewModel;
-//# sourceMappingURL=consultantViewModel.js.map
+//# sourceMappingURL=ConsultantViewModel.js.map
 
 /***/ }),
 /* 3 */
@@ -160,13 +158,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ViewModels = __webpack_require__(0);
 var Models = __webpack_require__(4);
 var CostOMeterViewModel = (function () {
-    function CostOMeterViewModel(newTimerInterval) {
+    function CostOMeterViewModel(newTimerInterval, timerFactory) {
         this.consultants = [];
         this.loadedConfigurations = [];
         this.timerInterval = newTimerInterval;
         this.lastId = 0;
         this.deletedConsultantCosts = 0;
         this.currency = 'SEK';
+        this.timerFactory = timerFactory;
     }
     CostOMeterViewModel.prototype.getTotalHourlyCost = function () {
         var totalHourlySummed = 0;
@@ -212,32 +211,29 @@ var CostOMeterViewModel = (function () {
         return isRunning;
     };
     CostOMeterViewModel.prototype.startCalculator = function () {
-        console.log('Starting calculator.');
         for (var _i = 0, _a = this.consultants; _i < _a.length; _i++) {
             var cons = _a[_i];
             cons.start();
         }
     };
     CostOMeterViewModel.prototype.stopCalculator = function () {
-        console.log('Stopping calculator.');
         for (var _i = 0, _a = this.consultants; _i < _a.length; _i++) {
             var cons = _a[_i];
             cons.pause();
         }
     };
     CostOMeterViewModel.prototype.addConsultant = function (name, cost) {
-        console.log('Adding consultant.');
         this.lastId = this.lastId + 1;
-        var newConsultant = new ViewModels.ConsultantViewModel(cost, name, this.lastId, this.timerInterval);
-        newConsultant.onTick = this.onTick;
+        var newConsultantTimer = this.timerFactory.createTimer(this.timerInterval);
+        var newConsultant = new ViewModels.ConsultantViewModel(newConsultantTimer, cost, name, this.lastId);
+        newConsultantTimer.vmInstance = newConsultant;
+        newConsultant.onTimerTicking = this.onTick;
         this.consultants.push(newConsultant);
         return newConsultant;
     };
     CostOMeterViewModel.prototype.removeConsultant = function (item) {
-        console.log('Removing consultant with id ' + item.id);
         var itemCost = item.getTotalCost();
         var index = this.consultants.indexOf(item);
-        console.log('Index of this one is: ' + index);
         this.consultants.splice(index, 1);
         this.deletedConsultantCosts = Number(this.deletedConsultantCosts) + Number(itemCost);
     };
@@ -293,7 +289,7 @@ var Consultant_1 = __webpack_require__(5);
 exports.Consultant = Consultant_1.Consultant;
 var CostConfiguration_1 = __webpack_require__(6);
 exports.CostConfiguration = CostConfiguration_1.CostConfiguration;
-//# sourceMappingURL=models.js.map
+//# sourceMappingURL=Models.js.map
 
 /***/ }),
 /* 5 */
@@ -370,6 +366,59 @@ var utilities = (function () {
 }());
 exports.utilities = utilities;
 //# sourceMappingURL=utilities.js.map
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+__export(__webpack_require__(9));
+//# sourceMappingURL=services.js.map
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var ConsultantTimerFactory = (function () {
+    function ConsultantTimerFactory() {
+    }
+    ConsultantTimerFactory.prototype.createTimer = function (timerInterval) {
+        return new ConsultantTimer(timerInterval);
+    };
+    return ConsultantTimerFactory;
+}());
+exports.ConsultantTimerFactory = ConsultantTimerFactory;
+var ConsultantTimer = (function () {
+    function ConsultantTimer(timerInterval) {
+        this.timerInterval = timerInterval;
+    }
+    ConsultantTimer.prototype.start = function () {
+        var _this = this;
+        this.lastStarted = new Date().getTime();
+        this.timer = setInterval(function () {
+            _this.ticking();
+        }, this.timerInterval);
+    };
+    ConsultantTimer.prototype.stop = function () {
+        clearInterval(this.timer);
+    };
+    ConsultantTimer.prototype.ticking = function () {
+        var elapsed = (new Date().getTime() - this.lastStarted);
+        var elapsedHours = (elapsed / 1000) / 3600;
+        this.onTick(elapsedHours, this.vmInstance);
+    };
+    return ConsultantTimer;
+}());
+exports.ConsultantTimer = ConsultantTimer;
+//# sourceMappingURL=consultantTimer.js.map
 
 /***/ })
 /******/ ]);

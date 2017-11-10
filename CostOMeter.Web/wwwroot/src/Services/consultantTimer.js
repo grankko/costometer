@@ -15,6 +15,7 @@ var ConsultantTimer = (function () {
     }
     ConsultantTimer.prototype.start = function () {
         var _this = this;
+        this.lastStarted = new Date().getTime();
         this.timer = setInterval(function () {
             _this.ticking();
         }, this.timerInterval);
@@ -25,7 +26,7 @@ var ConsultantTimer = (function () {
     ConsultantTimer.prototype.ticking = function () {
         var elapsed = (new Date().getTime() - this.lastStarted);
         var elapsedHours = (elapsed / 1000) / 3600;
-        this.onTick(elapsedHours);
+        this.onTick(elapsedHours, this.vmInstance);
     };
     return ConsultantTimer;
 }());

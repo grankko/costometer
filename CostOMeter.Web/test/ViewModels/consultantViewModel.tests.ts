@@ -12,7 +12,7 @@ describe("ConsultantViewModel", () => {
 
     beforeEach(function () {
         _sut = new ConsultantViewModel(new ConsultantTimerMock(), 1000, 'Test Consultant 1', 1);
-        _sut.onTick = () => {};
+        _sut.onTimerTicking = () => {};
     });
 
     describe("new ConsultantViewModel", () => {
@@ -24,7 +24,7 @@ describe("ConsultantViewModel", () => {
 
     describe("ConsultantViewModel", () => {
         it("should report correct cost after five hours running", () => {
-            _sut.ticking(5);
+            _sut.ticking(5, _sut);
             let actual = _sut.getTotalCost();
 
             chai.assert.equal(actual, 5000, "ConsultantViewModel did not report correct amount after five hours");
@@ -44,7 +44,7 @@ describe("ConsultantViewModel", () => {
             chai.assert.equal(actual, true, "ConsultantViewModel did not start running when started");
 
             _sut.pause();
-            _sut.ticking(1);
+            _sut.ticking(1, _sut);
             actual = _sut.isRunning;
             chai.assert.equal(actual, false, "ConsultantViewModel did not stop running when paused");
         });

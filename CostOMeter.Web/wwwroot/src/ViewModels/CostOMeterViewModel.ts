@@ -93,9 +93,9 @@ import * as Services from '../Services/services'
         public addConsultant(name: string, cost: number): ViewModels.ConsultantViewModel {
             this.lastId = this.lastId + 1;
             let newConsultantTimer = this.timerFactory.createTimer(this.timerInterval);
-            //let newConsultant = new ViewModels.ConsultantViewModel(cost, name, this.lastId, this.timerInterval);
             let newConsultant = new ViewModels.ConsultantViewModel(newConsultantTimer, cost, name, this.lastId);
-            newConsultant.onTick = this.onTick; // wires up function for updating on Consultant timer ticks.
+            newConsultantTimer.vmInstance = newConsultant;
+            newConsultant.onTimerTicking = this.onTick; // wires up function for updating on Consultant timer ticks.
 
             this.consultants.push(newConsultant);
 

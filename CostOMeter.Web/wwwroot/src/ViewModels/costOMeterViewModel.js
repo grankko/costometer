@@ -71,7 +71,8 @@ var CostOMeterViewModel = (function () {
         this.lastId = this.lastId + 1;
         var newConsultantTimer = this.timerFactory.createTimer(this.timerInterval);
         var newConsultant = new ViewModels.ConsultantViewModel(newConsultantTimer, cost, name, this.lastId);
-        newConsultant.onTick = this.onTick;
+        newConsultantTimer.vmInstance = newConsultant;
+        newConsultant.onTimerTicking = this.onTick;
         this.consultants.push(newConsultant);
         return newConsultant;
     };

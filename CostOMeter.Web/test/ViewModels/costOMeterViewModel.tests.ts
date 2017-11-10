@@ -108,8 +108,8 @@ describe("CostOMeterViewModel", () => {
 
             // simulate a tick
             for (let cons of _sut.consultants) {
-                cons.onTick = () => {};
-                cons.ticking(1);
+                cons.onTimerTicking = () => {};
+                cons.ticking(1, cons);
             }
 
             actual = _sut.getIsRunning();
@@ -120,8 +120,8 @@ describe("CostOMeterViewModel", () => {
             _sut.startCalculator();
             // simulate a tick
             for (let cons of _sut.consultants) {
-                cons.onTick = () => {};
-                cons.ticking(1);
+                cons.onTimerTicking = () => {};
+                cons.ticking(1, cons);
             }
 
             let actual = _sut.getTotalCost();
