@@ -152,7 +152,7 @@ import * as Models from '../Models/Models'
             return JSON.stringify(currentConfig);            
         }
 
-        private resetViewModel() {
+        public resetViewModel() {
             if (this.getIsPausable()) {
                 this.stopCalculator();
             }

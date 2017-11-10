@@ -4,6 +4,11 @@
         "watch": false,
         "module": "commonjs",
         "sourceMap": true,
-        "removeComments": true
-    }
+        "removeComments": true,
+        "allowJs": false
+    },
+    "exclude": [
+        "node_modules",
+        "wwwroot/out"
+    ]
 }

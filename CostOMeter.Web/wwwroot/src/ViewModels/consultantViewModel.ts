@@ -66,6 +66,7 @@
             this.currentTimespanCost = 0;
             this.lastStarted = new Date().getTime();
 
+            // this needs to be recatored to allow for test
             this.timer = setInterval(() => {
                 this.ticking();
             }, this.timerInterval);

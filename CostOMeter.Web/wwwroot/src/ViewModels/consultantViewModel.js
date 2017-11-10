@@ -51,4 +51,4 @@ var ConsultantViewModel = (function () {
     return ConsultantViewModel;
 }());
 exports.ConsultantViewModel = ConsultantViewModel;
-//# sourceMappingURL=consultantViewModel.js.map
+//# sourceMappingURL=ConsultantViewModel.js.map
