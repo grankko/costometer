@@ -1,7 +1,6 @@
 # cost-o-meter
 Calculates and displays costs in real time for resources with hourly rates.
-Load presets from api.
-Save your own configurations to json and load.
+Load presets from api. Save your own configurations to json.
 
 Built this just to explore the tech.
 
@@ -18,16 +17,8 @@ Live at: https://granaker.se/costometer
 - Mocha
 - Chai
 
-### Todo
-- ~~Build support for setting currency (defaults to )kr~~ DONE
-- ~~Build backend to save/load configurations~~ DONE
-- Feature complete. Refactor.
-
-### Refactor
-- ~~TypeScript Modules~~ introduced Webpack
-- Break up ViewModel and introduce client services
-- ~~UnitTest (api and client)~~
-- ~~Break up RiotJS tags. Seperate modal dialogs.~~
-
 ### Notes
-- Publish.bat builds and replaces web.config with web.production.config. Ignore it.
+- Markup references /wwwroot/out/ dir for .js, .map and .tag files.
+- VS Code task 'buildTs' transpiles TypeScript files in /wwwroot/src/ and /test to /transpiled dir. It also copies RiotJS .tag files to /wwwroot/out dir.
+- Run webpack with webpack_watch.bat to pack /transpiled JS to /wwwroot/out
+- Launch configuratiuon 'Run Mocha' runs task 'buildTs' and then runs Mocha for tests in /transpiled dir.

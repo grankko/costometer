@@ -8,6 +8,7 @@ var viewModules = require('./ViewModels/viewModels');
 var services = require('./Services/services');
 var utils = require('./utilities');
 
+// self executing entry point for app
 (function makeIt() {
     var vm = new viewModules.CostOMeterViewModel(100, new ConsultantTimerFactory());
     var u = new utils.utilities();
