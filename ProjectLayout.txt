@@ -1,0 +1,34 @@
+├───.vscode			<- launch as tasks configs
+├───CostOMeter.Web
+│   ├───Controllers		<- Api and home controller (aspnet core)
+│   ├───Models			<- Api models (aspnet core)
+│   ├───node_modules		<- mocha/chai modules used by tests
+│   ├───test			<- TypeScript mocha/chai tests
+│   │   ├───Mocks	
+│   │   └───ViewModels
+│   ├───transpiled		<- tsc outputs js here
+│   │   ├───test		<- ..for tests
+│   │   │   ├───Mocks
+│   │   │   └───ViewModels
+│   │   └───wwwroot		<- ..and the client application
+│   │       └───src
+│   │           ├───Models
+│   │           ├───Services
+│   │           └───ViewModels
+│   ├───Views			<- Aspnet MVC View
+│   │   └───Home
+│   └───wwwroot	
+│       ├───css
+│       ├───img
+│       ├───out			<- Webpack packs transpiled code and puts it here. Ignored by git.
+│       │   └───tags		<- RiotJS tags are copied here when built
+│       │   
+│       └───src			<- TypeScript code and RiotJS tags
+│           ├───Models		
+│           ├───Services
+│           ├───Tags		
+│           │   └───modals
+│           └───ViewModels
+├───CostOMeter.Web.Tests	<- dotnet tests for Api
+│   ├───Controllers
+└───EnvironmentConfigs		<- web.config for different environments. Copied in by publish task.
