@@ -1,4 +1,4 @@
-├───.vscode			<- launch as tasks configs
+├───.vscode			<- launch and tasks configs
 ├───CostOMeter.Web
 │   ├───Controllers		<- Api and home controller (aspnet core)
 │   ├───Models			<- Api models (aspnet core)
