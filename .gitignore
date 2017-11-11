@@ -22,6 +22,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 CostOMeter.Web/transpiled/
+CostOMeter.Web/wwwroot/out/
 
 # Visual Studio 2015 cache/options directory
 .vs/

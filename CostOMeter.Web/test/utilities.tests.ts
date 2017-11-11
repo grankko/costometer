@@ -18,6 +18,7 @@ describe("Utilities", () => {
             let actual: boolean = _sut.isEmptyOrSpaces('   ');
             chai.assert.equal(actual, true, "did not evaluate spaces as blank");
         });
+        
         it('should evaluate empty string as blank', () => {
             let actual: boolean = _sut.isEmptyOrSpaces('');
             chai.assert.equal(actual, true, "did not evaluate empty string as blank");
