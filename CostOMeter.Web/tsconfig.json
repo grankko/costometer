@@ -6,7 +6,7 @@
         "sourceMap": true,
         "removeComments": true,
         "allowJs": false,
-        "outDir": "build/",
+        "outDir": "transpiled/",
         "rootDirs": ["wwwroot/src/", "test"]
     },
     "exclude": [

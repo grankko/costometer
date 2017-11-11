@@ -1,6 +1,6 @@
 const path = require('path');
 module.exports = {
-  entry:  path.join(__dirname, 'build/wwwroot/src/', 'main'),
+  entry:  path.join(__dirname, 'transpiled/wwwroot/src/', 'main'),
   output: {
     filename: 'main.build.js',
     path: path.join(__dirname, 'wwwroot/out')
