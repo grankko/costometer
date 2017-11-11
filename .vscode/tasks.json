@@ -1,52 +1,69 @@
 {
-    "version": "0.1.0",
-    "command": "dotnet",
-    "isShellCommand": true,
-    "args": [],
+    "version": "2.0.0",
     "tasks": [
         {
-            "taskName": "build",
+            "label": "build",
             "args": [
+                "build",
                 "${workspaceRoot}/CostOMeter.sln"
             ],
-            "isBuildCommand": true,
-            "problemMatcher": "$msCompile"
+            "type": "shell",
+            "command": "dotnet",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
         ,
         {
-            "taskName": "copyTags",
-            "isShellCommand": true,
+            "label": "copyTags",
+            "type": "shell",
             "command": "xcopy",
-            "echoCommand": true,
             "args": [
                 "CostOMeter.Web\\wwwroot\\src\\tags",
-                "CostOMeter.Web\\wwwroot\\out\\",
+                "CostOMeter.Web\\wwwroot\\out\\tags",
                 "/s",
-                "/y"
-            ]
+                "/y",
+                "/I"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
         },
         {
-            "taskName": "buildTs",
-            "echoCommand": true,
-            // The command is tsc. Assumes that tsc has been installed using npm install -g typescript
+            "label": "buildTs",
             "command": "tsc",        
-            // The command is a shell script
-            "isShellCommand": true,        
-            // Show the output window only if unrecognized errors occur. 
-            "showOutput": "always",        
-            // Tell the tsc compiler to use the tsconfig.json from the open folder.
+            "dependsOn": ["copyTags"],
+            "type": "shell",        
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },        
             "args": ["-p", "CostOMeter.Web/tsconfig.json"],
-            // use the standard tsc problem matcher to find compile problems
-            // in the output.
             "problemMatcher": "$tsc"
         }
         ,
         {
-            "taskName": "test",
-            "args": [ ],
-            "isTestCommand": true,
-            "showOutput": "always",
-            "problemMatcher": "$msCompile"
+            "label": "test",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile",
+            "command": "dotnet",
+            "args": ["test", "CostOMeter.Web.Tests\\CostOMeter.Web.Tests.csproj"]
         }
     ]
 }
