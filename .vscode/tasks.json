@@ -20,8 +20,7 @@
                 "kind": "build",
                 "isDefault": true
             }
-        }
-        ,
+        },
         {
             "label": "copyTags",
             "type": "shell",
@@ -42,19 +41,23 @@
         },
         {
             "label": "buildTs",
-            "command": "tsc",        
-            "dependsOn": ["copyTags"],
-            "type": "shell",        
+            "command": "tsc",
+            "dependsOn": [
+                "copyTags"
+            ],
+            "type": "shell",
             "presentation": {
                 "echo": true,
                 "reveal": "always",
                 "focus": true,
                 "panel": "shared"
-            },        
-            "args": ["-p", "CostOMeter.Web/tsconfig.json"],
+            },
+            "args": [
+                "-p",
+                "CostOMeter.Web/tsconfig.json"
+            ],
             "problemMatcher": "$tsc"
-        }
-        ,
+        },
         {
             "label": "test",
             "group": {
@@ -63,7 +66,33 @@
             },
             "problemMatcher": "$msCompile",
             "command": "dotnet",
-            "args": ["test", "CostOMeter.Web.Tests\\CostOMeter.Web.Tests.csproj"]
+            "args": [
+                "test",
+                "CostOMeter.Web.Tests\\CostOMeter.Web.Tests.csproj"
+            ]
+        },
+        {
+            "label": "publish",
+            "type": "shell",
+            "command": "${cwd}\\publish.bat",
+            "args": [
+                "c:\\build",
+                "production"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "webpack watch",
+            "type": "shell",
+            "isBackground": true,
+            "command": "${cwd}\\webpack_watch.bat",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
         }
     ]
 }

@@ -19,6 +19,6 @@ Live at: https://granaker.se/costometer
 
 ### Notes
 - Markup references /wwwroot/out/ dir for .js, .map and .tag files.
+- VS Code task 'webpack watch' starts webpack in background to watch for changes in /transpiled dir and packs it to /wwwroot/out/ dir.
 - VS Code task 'buildTs' transpiles TypeScript files in /wwwroot/src/ and /test to /transpiled dir. It also copies RiotJS .tag files to /wwwroot/out dir.
-- Run webpack with webpack_watch.bat to pack /transpiled JS to /wwwroot/out
 - Launch configuratiuon 'Run Mocha' runs task 'buildTs' and then runs Mocha for tests in /transpiled dir.
