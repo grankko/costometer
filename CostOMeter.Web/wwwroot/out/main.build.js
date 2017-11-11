@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -69,12 +69,12 @@
 
 "use strict";
 
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
 Object.defineProperty(exports, "__esModule", { value: true });
-var ConsultantViewModel_1 = __webpack_require__(2);
-exports.ConsultantViewModel = ConsultantViewModel_1.ConsultantViewModel;
-var CostOMeterViewModel_1 = __webpack_require__(3);
-exports.CostOMeterViewModel = CostOMeterViewModel_1.CostOMeterViewModel;
-//# sourceMappingURL=viewModels.js.map
+__export(__webpack_require__(3));
+//# sourceMappingURL=services.js.map
 
 /***/ }),
 /* 1 */
@@ -83,10 +83,23 @@ exports.CostOMeterViewModel = CostOMeterViewModel_1.CostOMeterViewModel;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var services_1 = __webpack_require__(8);
-var viewModules = __webpack_require__(0);
-var services = __webpack_require__(8);
-var utils = __webpack_require__(7);
+var ConsultantViewModel_1 = __webpack_require__(4);
+exports.ConsultantViewModel = ConsultantViewModel_1.ConsultantViewModel;
+var CostOMeterViewModel_1 = __webpack_require__(5);
+exports.CostOMeterViewModel = CostOMeterViewModel_1.CostOMeterViewModel;
+//# sourceMappingURL=viewModels.js.map
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var services_1 = __webpack_require__(0);
+var viewModules = __webpack_require__(1);
+var services = __webpack_require__(0);
+var utils = __webpack_require__(9);
 (function makeIt() {
     var vm = new viewModules.CostOMeterViewModel(100, new services_1.ConsultantTimerFactory());
     var u = new utils.utilities();
@@ -96,7 +109,47 @@ var utils = __webpack_require__(7);
 //# sourceMappingURL=main.js.map
 
 /***/ }),
-/* 2 */
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var ConsultantTimerFactory = (function () {
+    function ConsultantTimerFactory() {
+    }
+    ConsultantTimerFactory.prototype.createTimer = function (timerInterval) {
+        return new ConsultantTimer(timerInterval);
+    };
+    return ConsultantTimerFactory;
+}());
+exports.ConsultantTimerFactory = ConsultantTimerFactory;
+var ConsultantTimer = (function () {
+    function ConsultantTimer(timerInterval) {
+        this.timerInterval = timerInterval;
+    }
+    ConsultantTimer.prototype.start = function () {
+        var _this = this;
+        this.lastStarted = new Date().getTime();
+        this.timer = setInterval(function () {
+            _this.ticking();
+        }, this.timerInterval);
+    };
+    ConsultantTimer.prototype.stop = function () {
+        clearInterval(this.timer);
+    };
+    ConsultantTimer.prototype.ticking = function () {
+        var elapsed = (new Date().getTime() - this.lastStarted);
+        var elapsedHours = (elapsed / 1000) / 3600;
+        this.onTick(elapsedHours, this.vmInstance);
+    };
+    return ConsultantTimer;
+}());
+exports.ConsultantTimer = ConsultantTimer;
+//# sourceMappingURL=consultantTimer.js.map
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -149,14 +202,14 @@ exports.ConsultantViewModel = ConsultantViewModel;
 //# sourceMappingURL=ConsultantViewModel.js.map
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ViewModels = __webpack_require__(0);
-var Models = __webpack_require__(4);
+var ViewModels = __webpack_require__(1);
+var Models = __webpack_require__(6);
 var CostOMeterViewModel = (function () {
     function CostOMeterViewModel(newTimerInterval, timerFactory) {
         this.consultants = [];
@@ -279,20 +332,20 @@ exports.CostOMeterViewModel = CostOMeterViewModel;
 //# sourceMappingURL=CostOMeterViewModel.js.map
 
 /***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Consultant_1 = __webpack_require__(5);
+var Consultant_1 = __webpack_require__(7);
 exports.Consultant = Consultant_1.Consultant;
-var CostConfiguration_1 = __webpack_require__(6);
+var CostConfiguration_1 = __webpack_require__(8);
 exports.CostConfiguration = CostConfiguration_1.CostConfiguration;
 //# sourceMappingURL=Models.js.map
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -307,7 +360,7 @@ exports.Consultant = Consultant;
 //# sourceMappingURL=Consultant.js.map
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -323,7 +376,7 @@ exports.CostConfiguration = CostConfiguration;
 //# sourceMappingURL=CostConfiguration.js.map
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -366,59 +419,6 @@ var utilities = (function () {
 }());
 exports.utilities = utilities;
 //# sourceMappingURL=utilities.js.map
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-__export(__webpack_require__(9));
-//# sourceMappingURL=services.js.map
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var ConsultantTimerFactory = (function () {
-    function ConsultantTimerFactory() {
-    }
-    ConsultantTimerFactory.prototype.createTimer = function (timerInterval) {
-        return new ConsultantTimer(timerInterval);
-    };
-    return ConsultantTimerFactory;
-}());
-exports.ConsultantTimerFactory = ConsultantTimerFactory;
-var ConsultantTimer = (function () {
-    function ConsultantTimer(timerInterval) {
-        this.timerInterval = timerInterval;
-    }
-    ConsultantTimer.prototype.start = function () {
-        var _this = this;
-        this.lastStarted = new Date().getTime();
-        this.timer = setInterval(function () {
-            _this.ticking();
-        }, this.timerInterval);
-    };
-    ConsultantTimer.prototype.stop = function () {
-        clearInterval(this.timer);
-    };
-    ConsultantTimer.prototype.ticking = function () {
-        var elapsed = (new Date().getTime() - this.lastStarted);
-        var elapsedHours = (elapsed / 1000) / 3600;
-        this.onTick(elapsedHours, this.vmInstance);
-    };
-    return ConsultantTimer;
-}());
-exports.ConsultantTimer = ConsultantTimer;
-//# sourceMappingURL=consultantTimer.js.map
 
 /***/ })
 /******/ ]);

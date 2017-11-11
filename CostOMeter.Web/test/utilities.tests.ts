@@ -22,5 +22,9 @@ describe("Utilities", () => {
             let actual: boolean = _sut.isEmptyOrSpaces('');
             chai.assert.equal(actual, true, "did not evaluate empty string as blank");
         });
+        it('should evaluate asdf string as not blank', () => {
+            let actual: boolean = _sut.isEmptyOrSpaces('asdf');
+            chai.assert.equal(actual, false, "did not evaluate asdf string as not blank");
+        });
     });
 });

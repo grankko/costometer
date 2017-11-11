@@ -1,10 +1,5 @@
 import { ConsultantTimerFactory } from "./Services/services";
 
-// import * as ViewModels from './ViewModels/viewModels'
-
-//  // Initiates object to bind in view and sets timer interval to 100ms
-//  var vm = new ViewModels.CostOMeterViewModel(100);
-
 declare var require: any
 declare var vm: any
 declare var riot: any

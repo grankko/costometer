@@ -14,7 +14,20 @@
         }
         ,
         {
+            "taskName": "copyTags",
+            "isShellCommand": true,
+            "command": "xcopy",
+            "echoCommand": true,
+            "args": [
+                "CostOMeter.Web\\wwwroot\\src\\tags",
+                "CostOMeter.Web\\wwwroot\\out\\",
+                "/s",
+                "/y"
+            ]
+        },
+        {
             "taskName": "buildTs",
+            "echoCommand": true,
             // The command is tsc. Assumes that tsc has been installed using npm install -g typescript
             "command": "tsc",        
             // The command is a shell script

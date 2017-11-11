@@ -48,7 +48,7 @@
             "preLaunchTask": "buildTs",
             "name": "Run Mocha",
             "program": "${workspaceRoot}/CostOMeter.Web/node_modules/mocha/bin/_mocha",
-            "args": ["${workspaceRoot}/CostOMeter.Web/test/**/*.js"],
+            "args": ["${workspaceRoot}/CostOMeter.Web/build/test/**/*.js"],
             "cwd": "${workspaceRoot}/CostOMeter.Web/",
             "outFiles": []
         }

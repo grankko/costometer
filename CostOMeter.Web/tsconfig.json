@@ -5,7 +5,9 @@
         "module": "commonjs",
         "sourceMap": true,
         "removeComments": true,
-        "allowJs": false
+        "allowJs": false,
+        "outDir": "build/",
+        "rootDirs": ["wwwroot/src/", "test"]
     },
     "exclude": [
         "node_modules",
