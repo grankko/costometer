@@ -8,7 +8,7 @@ namespace CostOMeter.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string listName)
         {
             return View();
         }

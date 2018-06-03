@@ -13,7 +13,8 @@
     "ts-node": "^3.3.0"
   },
   "devDependencies": {
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "webpack": "^4.10.2"
   },
   "scripts": {
     "pretest": "tsc tests/ --module commonjs",
