@@ -8,7 +8,7 @@ Live at: https://costometer.granaker.se/
 
 ### Built with
 - TypeScript
-- Aspnet Core 2.0
+- aspnet
 - RiotJS
 - Bootstrap
 - jQuery
