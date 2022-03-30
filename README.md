@@ -4,7 +4,7 @@ Load presets from api. Save your own configurations to json.
 
 Built this just to explore the tech.
 
-Live at: https://granaker.se/costometer
+Live at: https://costometer.granaker.se/
 
 ### Built with
 - TypeScript
