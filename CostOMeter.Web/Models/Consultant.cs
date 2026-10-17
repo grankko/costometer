@@ -2,7 +2,7 @@ namespace CostOMeter.Web.Models
 {
     public class Consultant
     {
-        public int HourlyCost { get; set; }
-        public string Name { get; set; }
+        public required string Name { get; set; }
+        public decimal HourlyRate { get; set; }
     }
 }

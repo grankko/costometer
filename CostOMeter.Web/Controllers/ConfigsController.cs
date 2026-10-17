@@ -7,10 +7,66 @@ using CostOMeter.Web.Models;
 
 namespace CostOMeter.Web.Controllers
 {
-
-    [Route("api/[controller]")]
     public class ConfigsController : Controller
     {
+        private static List<CostConfiguration> _configurations = new();
+
+        public IActionResult Index()
+        {
+            return View(_configurations);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(CostConfiguration configuration)
+        {
+            if (ModelState.IsValid)
+            {
+                configuration.Id = _configurations.Count + 1;
+                _configurations.Add(configuration);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(configuration);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var configuration = _configurations.Find(c => c.Id == id);
+            if (configuration == null)
+            {
+                return NotFound();
+            }
+            return View(configuration);
+        }
+
+        [HttpGet]
+        public IActionResult GetCosts(int id)
+        {
+            var configuration = _configurations.Find(c => c.Id == id);
+            if (configuration == null)
+            {
+                return NotFound();
+            }
+
+            var costs = new Dictionary<string, decimal>
+            {
+                { "8h", configuration.Consultants.Sum(c => c.HourlyRate * 8) },
+                { "16h", configuration.Consultants.Sum(c => c.HourlyRate * 16) },
+                { "24h", configuration.Consultants.Sum(c => c.HourlyRate * 24) },
+                { "40h", configuration.Consultants.Sum(c => c.HourlyRate * 40) },
+                { "80h", configuration.Consultants.Sum(c => c.HourlyRate * 80) },
+                { "120h", configuration.Consultants.Sum(c => c.HourlyRate * 120) },
+                { "160h", configuration.Consultants.Sum(c => c.HourlyRate * 160) },
+                { "200h", configuration.Consultants.Sum(c => c.HourlyRate * 200) },
+                { "240h", configuration.Consultants.Sum(c => c.HourlyRate * 240) }
+            };
+
+            return Json(costs);
+        }
 
         [HttpGet]
         public IEnumerable<CostConfiguration> GetAll()
@@ -18,10 +74,9 @@ namespace CostOMeter.Web.Controllers
             return BuildTestSet();
         }
 
-        [HttpGet("{id}")]
-        public CostConfiguration GetById(long id)
+        public CostConfiguration? GetById(int id)
         {
-            return BuildTestSet().FirstOrDefault(cc => cc.Id == id);
+            return _configurations.Find(c => c.Id == id);
         }
 
         private List<CostConfiguration> BuildTestSet()
@@ -33,10 +88,10 @@ namespace CostOMeter.Web.Controllers
                 Consultants = new List<Consultant>(),
                 Name = "A-team"
             };
-            config1.Consultants.Add(new Consultant() { Name = "John Smith", HourlyCost = 1000 });
-            config1.Consultants.Add(new Consultant() { Name = "Templeton Peck", HourlyCost = 1100 });
-            config1.Consultants.Add(new Consultant() { Name = "H.M. Murdock", HourlyCost = 950 });
-            config1.Consultants.Add(new Consultant() { Name = "Bosco Albert", HourlyCost = 1150 });
+            config1.Consultants.Add(new Consultant() { Name = "John Smith", HourlyRate = 1000 });
+            config1.Consultants.Add(new Consultant() { Name = "Templeton Peck", HourlyRate = 1100 });
+            config1.Consultants.Add(new Consultant() { Name = "H.M. Murdock", HourlyRate = 950 });
+            config1.Consultants.Add(new Consultant() { Name = "Bosco Albert", HourlyRate = 1150 });
 
             var config2 = new CostConfiguration()
             {
@@ -44,11 +99,11 @@ namespace CostOMeter.Web.Controllers
                 Consultants = new List<Consultant>(),
                 Name = "Trailer Park Boys"
             };
-            config2.Consultants.Add(new Consultant() { Name = "Ricky LaFleur", HourlyCost = 1100 });
-            config2.Consultants.Add(new Consultant() { Name = "Julian", HourlyCost = 950 });
-            config2.Consultants.Add(new Consultant() { Name = "Bubbles", HourlyCost = 950 });
-            config2.Consultants.Add(new Consultant() { Name = "Jim Lahey", HourlyCost = 900 });
-            config2.Consultants.Add(new Consultant() { Name = "Randy Bobandy", HourlyCost = 700 });
+            config2.Consultants.Add(new Consultant() { Name = "Ricky LaFleur", HourlyRate = 1100 });
+            config2.Consultants.Add(new Consultant() { Name = "Julian", HourlyRate = 950 });
+            config2.Consultants.Add(new Consultant() { Name = "Bubbles", HourlyRate = 950 });
+            config2.Consultants.Add(new Consultant() { Name = "Jim Lahey", HourlyRate = 900 });
+            config2.Consultants.Add(new Consultant() { Name = "Randy Bobandy", HourlyRate = 700 });
 
             var config3 = new CostConfiguration()
             {
@@ -56,13 +111,13 @@ namespace CostOMeter.Web.Controllers
                 Consultants = new List<Consultant>(),
                 Name = "Team Pickle Rick"
             };
-            config3.Consultants.Add(new Consultant() { Name = "Rick Sanchez", HourlyCost = 1050 });
-            config3.Consultants.Add(new Consultant() { Name = "Morty Smith", HourlyCost = 900 });
-            config3.Consultants.Add(new Consultant() { Name = "Beth Smith", HourlyCost = 950 });
-            config3.Consultants.Add(new Consultant() { Name = "Jerry Smith", HourlyCost = 900 });
-            config3.Consultants.Add(new Consultant() { Name = "Summer Smith", HourlyCost = 600 });
-            config3.Consultants.Add(new Consultant() { Name = "Mr Meeseeks", HourlyCost = 850 });
-            config3.Consultants.Add(new Consultant() { Name = "Dr Xenon Bloom", HourlyCost = 900 });
+            config3.Consultants.Add(new Consultant() { Name = "Rick Sanchez", HourlyRate = 1050 });
+            config3.Consultants.Add(new Consultant() { Name = "Morty Smith", HourlyRate = 900 });
+            config3.Consultants.Add(new Consultant() { Name = "Beth Smith", HourlyRate = 950 });
+            config3.Consultants.Add(new Consultant() { Name = "Jerry Smith", HourlyRate = 900 });
+            config3.Consultants.Add(new Consultant() { Name = "Summer Smith", HourlyRate = 600 });
+            config3.Consultants.Add(new Consultant() { Name = "Mr Meeseeks", HourlyRate = 850 });
+            config3.Consultants.Add(new Consultant() { Name = "Dr Xenon Bloom", HourlyRate = 900 });
 
             configs.Add(config1);
             configs.Add(config2);

@@ -1,1 +1,0 @@
-webpack --watch --colors --progress --config CostOMeter.Web\webpack.config.js

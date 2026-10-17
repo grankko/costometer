@@ -1,16 +1,18 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "watch": false,
-        "module": "commonjs",
+        "target": "ES2020",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "outDir": "./wwwroot",
+        "rootDir": "./src",
         "sourceMap": true,
-        "removeComments": true,
-        "allowJs": false,
-        "outDir": "transpiled/",
-        "rootDirs": ["wwwroot/src/", "test"]
+        "declaration": true,
+        "jsx": "react-jsx"
     },
-    "exclude": [
-        "node_modules",
-        "wwwroot/out"
-    ]
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "wwwroot"]
 }

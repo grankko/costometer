@@ -3,18 +3,14 @@
     "tasks": [
         {
             "label": "build",
+            "command": "dotnet",
+            "type": "process",
             "args": [
                 "build",
-                "${workspaceRoot}/CostOMeter.sln"
+                "${workspaceFolder}/CostOMeter.Web/CostOMeter.Web.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
             ],
-            "type": "shell",
-            "command": "dotnet",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": true,
-                "panel": "shared"
-            },
             "problemMatcher": "$msCompile",
             "group": {
                 "kind": "build",

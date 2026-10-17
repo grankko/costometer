@@ -1,31 +1,57 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
-  entry:  path.join(__dirname, 'transpiled/wwwroot/src/', 'main'),
+  entry: './src/index.ts',
   output: {
-    filename: 'main.build.js',
-    path: path.join(__dirname, 'wwwroot/out')
+    path: path.resolve(__dirname, 'wwwroot'),
+    filename: '[name].[contenthash].js',
+    clean: true,
   },
   module: {
-    rules: [{
-      test: /.jsx?$/,
-      include: [
-        path.resolve(__dirname, 'app')
-      ],
-      exclude: [
-        path.resolve(__dirname, 'node_modules'),
-        path.resolve(__dirname, 'bower_components')
-      ],
-      loader: 'babel-loader',
-      query: {
-        presets: ['es2015']
-      }
-    }]
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
+    ],
   },
   resolve: {
-    extensions: ['.json', '.js', '.jsx', '.css']
+    extensions: ['.tsx', '.ts', '.js'],
   },
-  devtool: 'source-map',
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
+  ],
   devServer: {
-    publicPath: path.join('/dist/')
-  }
+    static: {
+      directory: path.join(__dirname, 'wwwroot'),
+    },
+    compress: true,
+    port: 9000,
+    hot: true,
+  },
+  optimization: {
+    moduleIds: 'deterministic',
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
+  },
 };
